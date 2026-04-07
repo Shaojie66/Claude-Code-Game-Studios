@@ -116,6 +116,8 @@ Use curated Codex-native workflows first:
 - `$studio-design-system`
 - `$studio-create-architecture`
 - `$studio-architecture-decision`
+- `$studio-architecture-review`
+- `$studio-create-control-manifest`
 - `$studio-create-epics`
 - `$studio-create-stories`
 - `$studio-sprint-plan`

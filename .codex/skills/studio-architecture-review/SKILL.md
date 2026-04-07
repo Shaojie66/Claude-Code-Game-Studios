@@ -1,23 +1,65 @@
 ---
 name: studio-architecture-review
-description: Codex bridge for the legacy Claude Code Game Studios workflow `architecture-review`
+description: Codex-native architecture audit for coverage, consistency, engine fit, and traceability
 ---
 
-# Studio Bridge: architecture-review
+# Studio Architecture Review
 
-This wrapper ports the legacy workflow defined in `.claude/skills/architecture-review/SKILL.md` to Codex/OMX.
+Use this to validate whether the architecture body actually covers the GDDs, stays internally consistent, and targets the pinned engine correctly.
 
-<Execution>
-1. Read `.claude/skills/architecture-review/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/architecture-review/SKILL.md`
+4. In-scope GDDs under `design/gdd/`
+5. ADRs and architecture files under `docs/architecture/`
+6. Engine reference docs under `docs/engine-reference/<engine>/`
+7. `.claude/docs/technical-preferences.md`
+
+## Goal
+
+Produce an architecture review result with a clear `PASS`, `CONCERNS`, or `FAIL` verdict backed by requirement coverage, conflict detection, and engine compatibility evidence.
+
+## Workflow
+
+1. Resolve scope from:
+   - `full`
+   - `coverage`
+   - `consistency`
+   - `engine`
+   - `single-gdd <path>`
+   - `rtm`
+2. Load only the documents needed for the requested mode, but fully read all in-scope GDDs and ADRs before concluding.
+3. Extract or reuse technical requirements from the GDDs and map them to ADR coverage:
+   - `covered`
+   - `partial`
+   - `gap`
+4. Detect cross-ADR conflicts:
+   - ownership conflicts
+   - interface contradictions
+   - dependency cycles
+   - budget or initialization conflicts
+5. Audit engine compatibility across architecture artifacts:
+   - version consistency
+   - deprecated API references
+   - stale or missing engine compatibility sections
+   - post-cutoff API assumptions
+6. In `rtm` mode, extend the traceability chain to stories and tests when those artifacts exist.
+7. Write a review artifact under `docs/architecture/` that names findings, unresolved gaps, and the final gate verdict.
+
+## Codex Adaptation Rules
+
+- Prefer evidence tables and written review artifacts over interactive Claude review choreography.
+- Do not mark architecture healthy when gaps, contradictions, or engine blind spots remain unresolved.
+- Reuse existing TR registries or traceability docs when present instead of renumbering requirements casually.
+- Treat engine-reference docs as the source of truth for post-cutoff behavior.
+- Recommend concrete next actions like `$studio-architecture-decision` or `$studio-create-control-manifest` based on the verdict.
+
+## Handoff
+
+Recommend the next step, usually `$studio-architecture-decision`, `$studio-create-control-manifest`, or a focused fix pass before story planning proceeds.
+
+## Completion
+
+Complete when the review artifact exists, findings are traceable to repo evidence, and the user has a clear architecture gate verdict.
