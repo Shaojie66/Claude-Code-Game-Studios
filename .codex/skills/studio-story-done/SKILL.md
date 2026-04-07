@@ -1,23 +1,42 @@
 ---
 name: studio-story-done
-description: Codex bridge for the legacy Claude Code Game Studios workflow `story-done`
+description: Codex-native story closure and verification workflow
 ---
 
-# Studio Bridge: story-done
+# Studio Story Done
 
-This wrapper ports the legacy workflow defined in `.claude/skills/story-done/SKILL.md` to Codex/OMX.
+Use this to close a story after implementation and review.
 
-<Execution>
-1. Read `.claude/skills/story-done/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/story-done/SKILL.md`
+4. The target story file
+5. Any linked TR/ADR/context needed to verify closure
+
+## Workflow
+
+1. Resolve the story from the argument or session-state context.
+2. Read the story acceptance criteria and referenced implementation files.
+3. Verify completion using direct evidence:
+   - file existence
+   - current code shape
+   - test presence for logic/integration stories
+   - review status or outstanding findings
+4. If evidence is incomplete, report what is missing instead of marking the story done.
+5. If closure is justified, update the story status and note the result in `production/session-state/active.md`.
+
+## Codex Adaptation Rules
+
+- Do not use Claude-style question trees unless a real ambiguity blocks closure.
+- Prefer evidence-backed closure over ceremony.
+- Do not mark a story complete when review or required test evidence is still missing.
+
+## Handoff
+
+Recommend the next story or the next pipeline step after closure.
+
+## Completion
+
+Complete when the story status is accurately updated and the user has a clear next move.

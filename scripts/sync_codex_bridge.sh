@@ -7,10 +7,16 @@ CLAUDE_AGENTS_DIR="$ROOT_DIR/.claude/agents"
 CLAUDE_SKILLS_DIR="$ROOT_DIR/.claude/skills"
 CODEX_SKILLS_DIR="$ROOT_DIR/.codex/skills"
 CURATED_SKILLS=(
+  "studio-brainstorm"
+  "studio-code-review"
+  "studio-design-system"
   "studio-dev-story"
   "studio-help"
   "studio-project-stage-detect"
+  "studio-setup-engine"
   "studio-start"
+  "studio-story-done"
+  "studio-test-setup"
 )
 
 mkdir -p "$CODEX_SKILLS_DIR"

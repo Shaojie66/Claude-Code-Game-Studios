@@ -9,7 +9,7 @@ This repository started as a Claude Code template. It now includes a Codex/OMX c
 - Legacy workflow skills under `.claude/skills/` are exposed to Codex as `$studio-<workflow>`.
 - `docs/codex-agent-catalog.md` maps upstream role names to the generated Codex prompt names.
 - The generated bridge layer is intentionally thin: it reads the legacy source file at runtime and adapts Claude-specific concepts to Codex conventions.
-- A small set of high-traffic workflows use hand-authored Codex-native wrappers instead of the generic bridge: `$studio-start`, `$studio-help`, `$studio-project-stage-detect`, and `$studio-dev-story`.
+- A small set of high-traffic workflows use hand-authored Codex-native wrappers instead of the generic bridge: `$studio-start`, `$studio-help`, `$studio-project-stage-detect`, `$studio-dev-story`, `$studio-brainstorm`, `$studio-design-system`, `$studio-code-review`, `$studio-story-done`, `$studio-setup-engine`, and `$studio-test-setup`.
 
 ## Recommended Entry Points
 
@@ -38,3 +38,15 @@ This script rebuilds:
 - `.codex/skills/studio-*/SKILL.md`
 
 The bridge is safe to rerun because the generated files are deterministic wrappers over the legacy `.claude` sources. The hand-authored curated wrappers listed above are preserved and not overwritten by the sync script.
+
+## Curated vs Generated
+
+Use curated wrappers first for the main Codex path:
+
+- ideation: `$studio-brainstorm`
+- engine/bootstrap: `$studio-setup-engine`, `$studio-test-setup`
+- project orientation: `$studio-start`, `$studio-help`, `$studio-project-stage-detect`
+- implementation/review/closure: `$studio-dev-story`, `$studio-code-review`, `$studio-story-done`
+- design authoring: `$studio-design-system`
+
+Treat the rest of the `$studio-*` surface as generated bridges unless they are explicitly documented as curated.

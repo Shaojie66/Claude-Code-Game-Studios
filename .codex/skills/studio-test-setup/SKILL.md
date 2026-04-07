@@ -1,23 +1,37 @@
 ---
 name: studio-test-setup
-description: Codex bridge for the legacy Claude Code Game Studios workflow `test-setup`
+description: Codex-native test infrastructure setup workflow for the selected engine
 ---
 
-# Studio Bridge: test-setup
+# Studio Test Setup
 
-This wrapper ports the legacy workflow defined in `.claude/skills/test-setup/SKILL.md` to Codex/OMX.
+Use this to scaffold or validate test infrastructure for the chosen engine.
 
-<Execution>
-1. Read `.claude/skills/test-setup/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/test-setup/SKILL.md`
+4. `.claude/docs/technical-preferences.md`
+5. Existing `tests/` and `.github/workflows/` state
+
+## Workflow
+
+1. Detect the configured engine and current test infrastructure.
+2. Stop only if the engine is still unconfigured.
+3. Otherwise create missing, engine-appropriate test scaffolding and CI artifacts without overwriting existing good files unnecessarily.
+4. Document what was created and what remains manual.
+
+## Codex Adaptation Rules
+
+- Do not block on Claude-style confirmation prompts for straightforward scaffolding.
+- Prefer additive creation over destructive replacement.
+- Keep the result aligned with the engine choice in `.claude/docs/technical-preferences.md`.
+
+## Handoff
+
+Recommend the next step, usually `$studio-qa-plan`, `$studio-dev-story`, or focused engine setup work.
+
+## Completion
+
+Complete when the required test directories/config are in place or the missing prerequisite is clearly stated.

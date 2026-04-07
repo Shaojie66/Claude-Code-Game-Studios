@@ -45,7 +45,7 @@ Read [docs/codex-port.md](docs/codex-port.md) for the exact compatibility model.
 
 - [What's Included](#whats-included)
 - [Studio Hierarchy](#studio-hierarchy)
-- [Slash Commands](#slash-commands)
+- [Codex Workflows](#codex-workflows)
 - [Getting Started](#getting-started)
 - [Upgrading](#upgrading)
 - [Project Structure](#project-structure)
@@ -103,9 +103,27 @@ The template includes agent sets for all three major engines. Use the set that m
 | **Unity** | `unity-specialist` | DOTS/ECS, Shaders/VFX, Addressables, UI Toolkit |
 | **Unreal Engine 5** | `unreal-specialist` | GAS, Blueprints, Replication, UMG/CommonUI |
 
-## Slash Commands
+## Codex Workflows
 
-Type `/` in Claude Code to access all 72 skills:
+Use curated Codex-native workflows first:
+
+**Core path**
+- `$studio-start`
+- `$studio-help`
+- `$studio-project-stage-detect`
+- `$studio-brainstorm`
+- `$studio-setup-engine`
+- `$studio-design-system`
+- `$studio-test-setup`
+- `$studio-dev-story`
+- `$studio-code-review`
+- `$studio-story-done`
+
+Generated `$studio-*` bridges still exist for the rest of the upstream workflow catalog.
+
+## Upstream Workflow Catalog
+
+The upstream template still defines the original Claude-oriented workflow inventory. Treat it as reference source material that this fork maps into Codex:
 
 **Onboarding & Navigation**
 `/start` `/help` `/project-stage-detect` `/setup-engine` `/adopt`

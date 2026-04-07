@@ -1,23 +1,43 @@
 ---
 name: studio-setup-engine
-description: Codex bridge for the legacy Claude Code Game Studios workflow `setup-engine`
+description: Codex-native engine selection and configuration workflow for the game studio template
 ---
 
-# Studio Bridge: setup-engine
+# Studio Setup Engine
 
-This wrapper ports the legacy workflow defined in `.claude/skills/setup-engine/SKILL.md` to Codex/OMX.
+Use this to choose and configure Godot, Unity, or Unreal for the project.
 
-<Execution>
-1. Read `.claude/skills/setup-engine/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/setup-engine/SKILL.md`
+4. `.claude/docs/technical-preferences.md`
+5. `design/gdd/game-concept.md` if present
+
+## Goal
+
+Move the project from unconfigured or ambiguous engine state to an explicit engine choice documented in repo files.
+
+## Workflow
+
+1. Detect whether an engine is already configured.
+2. If configured, validate whether the current choice still matches the concept and user intent.
+3. If not configured, recommend an engine based on:
+   - project scope
+   - target platform
+   - team experience
+   - concept needs
+4. Ask only for missing preference signals that materially affect the engine choice.
+5. Update `.claude/docs/technical-preferences.md` with the chosen engine and associated language/tooling details.
+6. Point to engine-specific specialists or next setup steps.
+
+## Codex Adaptation Rules
+
+- Replace long interactive Claude questionnaires with a compact recommendation plus 1-3 decisive questions at most.
+- Write the engine configuration directly once the choice is clear.
+- Prefer concrete downstream recommendations like `$studio-test-setup` and engine specialist prompts.
+
+## Completion
+
+Complete when the engine choice is explicit in repo docs and the user has the next setup step.

@@ -1,23 +1,45 @@
 ---
 name: studio-code-review
-description: Codex bridge for the legacy Claude Code Game Studios workflow `code-review`
+description: Codex-native review workflow for implementation changes in the game studio template
 ---
 
-# Studio Bridge: code-review
+# Studio Code Review
 
-This wrapper ports the legacy workflow defined in `.claude/skills/code-review/SKILL.md` to Codex/OMX.
+Use this for architectural and quality review of a changed file set or story implementation.
 
-<Execution>
-1. Read `.claude/skills/code-review/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/code-review/SKILL.md`
+4. Relevant story, ADR, or GDD files when the change is tied to them
+
+## Workflow
+
+1. Resolve the review target from explicit file paths, current diff, or session-state context.
+2. Read the changed files, not just summaries.
+3. Cross-check against:
+   - governing story acceptance criteria if present
+   - ADR constraints if present
+   - control-manifest expectations if present
+4. Review for:
+   - correctness
+   - scope drift
+   - maintainability
+   - missing tests or evidence
+   - violations of design or architecture intent
+5. Produce a concise review verdict with concrete findings and exact file references.
+
+## Codex Adaptation Rules
+
+- Prefer direct Codex review output or `::code-comment` findings when needed.
+- Do not recreate Claude approval choreography.
+- Report “no issues found” explicitly when the change is sound.
+
+## Handoff
+
+Recommend the next command, usually `$studio-story-done` or a focused fix pass.
+
+## Completion
+
+Complete when the user has an actionable review verdict grounded in the actual changed files.
