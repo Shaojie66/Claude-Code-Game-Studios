@@ -1,23 +1,61 @@
 ---
 name: studio-story-readiness
-description: Codex bridge for the legacy Claude Code Game Studios workflow `story-readiness`
+description: Codex-native readiness check for implementation stories
 ---
 
-# Studio Bridge: story-readiness
+# Studio Story Readiness
 
-This wrapper ports the legacy workflow defined in `.claude/skills/story-readiness/SKILL.md` to Codex/OMX.
+Use this before implementation to decide whether a story is actually ready to hand to `$studio-dev-story`.
 
-<Execution>
-1. Read `.claude/skills/story-readiness/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/story-readiness/SKILL.md`
+4. The target story file or story set
+5. Supporting references such as TR registry, ADRs, control manifest, and sprint file when relevant
+
+## Goal
+
+Return a clear verdict for each story:
+
+- `READY`
+- `NEEDS WORK`
+- `BLOCKED`
+
+## Workflow
+
+1. Resolve scope from:
+   - a specific story path
+   - `sprint`
+   - `all`
+   - active session-state context when no argument is given
+2. Load shared supporting context once:
+   - `design/gdd/systems-index.md`
+   - `docs/architecture/control-manifest.md` if present
+   - `docs/architecture/tr-registry.yaml` if present
+   - referenced ADR statuses
+3. For each story, check:
+   - specific GDD requirement traceability
+   - testable acceptance criteria
+   - ADR/TR/manifest completeness
+   - dependencies and blocker state
+   - asset reference existence when assets are named
+   - story type and test-evidence expectations
+4. Produce a concise per-story gap list with exact fixes.
+
+## Codex Adaptation Rules
+
+- Keep this workflow read-only.
+- Do not simulate Claude `AskUserQuestion`; if scope is ambiguous, infer from repo state or ask one short question.
+- Prefer evidence-backed verdicts over checklist theater.
+
+## Handoff
+
+- If `READY` → recommend `$studio-dev-story`
+- If `NEEDS WORK` → recommend the specific doc/setup workflow that closes the gap
+- If `BLOCKED` → name the blocking dependency or missing architecture artifact
+
+## Completion
+
+Complete when the user has explicit verdicts and concrete fixes or next actions for the evaluated stories.

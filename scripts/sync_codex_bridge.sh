@@ -15,6 +15,7 @@ CURATED_SKILLS=(
   "studio-project-stage-detect"
   "studio-setup-engine"
   "studio-start"
+  "studio-story-readiness"
   "studio-story-done"
   "studio-test-setup"
 )
