@@ -115,7 +115,9 @@ Use curated Codex-native workflows first:
 - `$studio-setup-engine`
 - `$studio-map-systems`
 - `$studio-design-system`
+- `$studio-design-review`
 - `$studio-review-all-gdds`
+- `$studio-propagate-design-change`
 - `$studio-create-architecture`
 - `$studio-architecture-decision`
 - `$studio-architecture-review`
