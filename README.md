@@ -131,6 +131,8 @@ Use curated Codex-native workflows first:
 - `$studio-smoke-check`
 - `$studio-team-qa`
 - `$studio-gate-check`
+- `$studio-regression-suite`
+- `$studio-test-evidence-review`
 - `$studio-test-setup`
 - `$studio-dev-story`
 - `$studio-code-review`

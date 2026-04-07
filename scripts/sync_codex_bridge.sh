@@ -26,6 +26,7 @@ CURATED_SKILLS=(
   "studio-propagate-design-change"
   "studio-qa-plan"
   "studio-release-checklist"
+  "studio-regression-suite"
   "studio-review-all-gdds"
   "studio-setup-engine"
   "studio-smoke-check"
@@ -34,6 +35,7 @@ CURATED_SKILLS=(
   "studio-start"
   "studio-story-readiness"
   "studio-story-done"
+  "studio-test-evidence-review"
   "studio-team-qa"
   "studio-test-setup"
 )

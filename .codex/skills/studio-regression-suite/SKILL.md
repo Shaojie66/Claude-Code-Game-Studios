@@ -1,23 +1,61 @@
 ---
 name: studio-regression-suite
-description: Codex bridge for the legacy Claude Code Game Studios workflow `regression-suite`
+description: Codex-native workflow for maintaining the regression test manifest and spotting coverage drift
 ---
 
-# Studio Bridge: regression-suite
+# Studio Regression Suite
 
-This wrapper ports the legacy workflow defined in `.claude/skills/regression-suite/SKILL.md` to Codex/OMX.
+Use this after bug fixes, before gates, or at sprint close to keep the regression suite honest and current.
 
-<Execution>
-1. Read `.claude/skills/regression-suite/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/regression-suite/SKILL.md`
+4. Existing tests under `tests/`
+5. `tests/regression-suite.md` if present
+6. Relevant GDDs, stories, and closed bug reports
+
+## Goal
+
+Write or refresh `tests/regression-suite.md` so the project has a curated registry of tests covering critical paths, bug regressions, and newly introduced coverage gaps.
+
+## Workflow
+
+1. Resolve mode:
+   - `update`
+   - `audit`
+   - `report`
+2. Load the current regression-suite manifest if it exists.
+3. Inventory test files and relevant story/bug context:
+   - unit tests
+   - integration tests
+   - regression-specific tests
+   - closed bugs
+   - critical-path GDD acceptance criteria or current sprint scope
+4. Map coverage:
+   - critical path coverage
+   - fixed bugs without regression tests
+   - drift from new systems or stories
+5. Produce a report summarizing:
+   - covered paths
+   - partial coverage
+   - missing regression tests
+   - stale or quarantined tests
+6. In write modes, update `tests/regression-suite.md` with registered tests, known gaps, and quarantine notes.
+
+## Codex Adaptation Rules
+
+- Treat the regression suite as a registry of existing tests, not a place to invent fake coverage.
+- Never silently remove registered regression tests from the manifest.
+- Distinguish advisory gaps from actual release blockers.
+- Prefer repo evidence over assumptions about what a test probably covers.
+- Recommend test-scaffolding or flakiness workflows when gaps are found, rather than trying to fix them here.
+
+## Handoff
+
+Recommend the next step, usually `$studio-test-evidence-review`, `$studio-gate-check`, or a focused test-writing pass.
+
+## Completion
+
+Complete when the regression-suite report is grounded and, in write modes, `tests/regression-suite.md` is updated with current coverage status.
