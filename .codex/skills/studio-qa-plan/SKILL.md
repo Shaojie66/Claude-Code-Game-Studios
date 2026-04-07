@@ -1,23 +1,52 @@
 ---
 name: studio-qa-plan
-description: Codex bridge for the legacy Claude Code Game Studios workflow `qa-plan`
+description: Codex-native workflow for generating QA plans for stories, features, or sprints
 ---
 
-# Studio Bridge: qa-plan
+# Studio QA Plan
 
-This wrapper ports the legacy workflow defined in `.claude/skills/qa-plan/SKILL.md` to Codex/OMX.
+Use this before implementation or QA handoff to turn stories into a concrete test plan.
 
-<Execution>
-1. Read `.claude/skills/qa-plan/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/qa-plan/SKILL.md`
+4. In-scope story files plus referenced GDD sections and formulas
+
+## Goal
+
+Generate a QA plan that tells the team what to automate, what to verify manually, and what evidence is required.
+
+## Workflow
+
+1. Resolve scope from:
+   - `sprint`
+   - `feature:<name>`
+   - `story:<path>`
+2. Load full story files plus the minimal supporting GDD/manifest context needed for testing.
+3. Classify stories by primary test type:
+   - `Logic`
+   - `Integration`
+   - `Visual/Feel`
+   - `UI`
+   - `Config/Data`
+4. Write a QA plan under `production/qa/` covering:
+   - automated tests required
+   - manual checks
+   - smoke scope
+   - playtest/sign-off requirements
+
+## Codex Adaptation Rules
+
+- Do not preserve Claude approval choreography.
+- Prefer concrete evidence paths and test file expectations over generic QA advice.
+- Flag missing GDD formulas or traceability gaps instead of inventing tests.
+
+## Handoff
+
+Recommend the next step, usually `$studio-smoke-check`, `$studio-dev-story`, or `$studio-story-done` depending on timing.
+
+## Completion
+
+Complete when the QA plan file exists and gives the team a concrete testing contract for the selected scope.

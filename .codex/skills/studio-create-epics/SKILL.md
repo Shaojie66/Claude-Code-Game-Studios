@@ -1,23 +1,50 @@
 ---
 name: studio-create-epics
-description: Codex bridge for the legacy Claude Code Game Studios workflow `create-epics`
+description: Codex-native workflow for translating GDD and architecture into epic files
 ---
 
-# Studio Bridge: create-epics
+# Studio Create Epics
 
-This wrapper ports the legacy workflow defined in `.claude/skills/create-epics/SKILL.md` to Codex/OMX.
+Use this to create bounded epic definitions from approved GDD and architecture material.
 
-<Execution>
-1. Read `.claude/skills/create-epics/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.claude/skills/create-epics/SKILL.md`
+4. `design/gdd/systems-index.md`
+5. Relevant GDDs, architecture docs, ADRs, control manifest, and TR registry
+
+## Goal
+
+Produce epic-level scope documents that map systems to architectural modules without jumping ahead into story decomposition.
+
+## Workflow
+
+1. Resolve scope from:
+   - one system
+   - one layer
+   - `all`
+2. Load only the in-scope GDDs and matching architecture/ADR material.
+3. For each system, define:
+   - architectural module ownership
+   - governing ADRs
+   - engine risk
+   - traced vs untraced requirements
+4. Write:
+   - `production/epics/<epic>/EPIC.md`
+   - `production/epics/index.md`
+
+## Codex Adaptation Rules
+
+- Do not preserve Claude approval choreography.
+- Warn clearly when requirements are untraced or ADR coverage is missing.
+- Stop at epic scope; do not also create stories in this workflow.
+
+## Handoff
+
+Recommend the next step, usually `$studio-create-stories <epic>` or `$studio-architecture-decision` when epic coverage gaps remain.
+
+## Completion
+
+Complete when in-scope epics exist with clear scope, ADR mapping, and next-step handoff.
