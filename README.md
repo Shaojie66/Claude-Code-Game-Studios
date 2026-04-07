@@ -133,6 +133,8 @@ Use curated Codex-native workflows first:
 - `$studio-gate-check`
 - `$studio-regression-suite`
 - `$studio-test-evidence-review`
+- `$studio-test-flakiness`
+- `$studio-test-helpers`
 - `$studio-test-setup`
 - `$studio-dev-story`
 - `$studio-code-review`

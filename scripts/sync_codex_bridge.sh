@@ -36,6 +36,8 @@ CURATED_SKILLS=(
   "studio-story-readiness"
   "studio-story-done"
   "studio-test-evidence-review"
+  "studio-test-flakiness"
+  "studio-test-helpers"
   "studio-team-qa"
   "studio-test-setup"
 )
