@@ -114,6 +114,8 @@ Use curated Codex-native workflows first:
 - `$studio-brainstorm`
 - `$studio-setup-engine`
 - `$studio-design-system`
+- `$studio-create-stories`
+- `$studio-sprint-plan`
 - `$studio-story-readiness`
 - `$studio-test-setup`
 - `$studio-dev-story`
