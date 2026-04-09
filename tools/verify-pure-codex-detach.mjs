@@ -353,7 +353,15 @@ function summarizeHits(hits) {
 async function detectGeneratorFiles(root, explicitCandidates) {
   const selected = explicitCandidates?.map((item) => item.trim()).filter(Boolean);
   if (selected?.length) {
-    return selected.filter(async (candidate) => await pathExists(path.join(root, candidate)));
+    const existing = [];
+
+    for (const candidate of selected) {
+      if (await pathExists(path.join(root, candidate))) {
+        existing.push(candidate);
+      }
+    }
+
+    return existing;
   }
 
   const candidateFiles = await collectFiles(root, ["scripts", "tools"]);
