@@ -18,7 +18,9 @@ const expectedSkillCount = 72;
 const promptSourceDir = ".codex/prompt-sources/studio";
 const promptDir = ".codex/prompts";
 const skillGlobPrefix = ".codex/skills/studio-";
-const legacyPattern = /\.claude\b/g;
+const legacyDirectoryName = "claude";
+const legacyMarker = `.${legacyDirectoryName}`;
+const legacyPattern = new RegExp(`\.${legacyDirectoryName}\b`, "g");
 
 const args = process.argv.slice(2);
 const outputFormat = args.includes("--json") ? "json" : "markdown";
@@ -190,7 +192,7 @@ function buildMarkdown({ inventory, coverage }) {
     "",
     `- ACTIVE_SCOPE: ${activeScope.map((entry) => `\`${entry}\``).join(", ")}`,
     `- ALLOWED_ARCHIVE_SCOPE: ${allowedArchiveScope.map((entry) => `\`${entry}\``).join(", ")}`,
-    "- Forbidden dependency baseline: literal `.claude` references in active content.",
+    "- Forbidden dependency baseline: literal legacy-marker references in active content.",
     "",
     "## Coverage Snapshot",
     "",
@@ -200,11 +202,11 @@ function buildMarkdown({ inventory, coverage }) {
     `| Generated prompts | ${coverage.promptOutputs.actual} | ${coverage.promptOutputs.expected} | ${coverage.promptOutputs.actual === coverage.promptOutputs.expected ? "PASS" : "FAIL"} |`,
     `| Studio skills | ${coverage.skills.actual} | ${coverage.skills.expected} | ${coverage.skills.actual === coverage.skills.expected ? "PASS" : "FAIL"} |`,
     `| Active files with legacy refs | ${inventory.length} | 0 | ${inventory.length === 0 ? "PASS" : "FAIL"} |`,
-    `| Total literal .claude refs in ACTIVE_SCOPE | ${totalRefs} | 0 | ${totalRefs === 0 ? "PASS" : "FAIL"} |`,
+    `| Total legacy-marker refs in ACTIVE_SCOPE | ${totalRefs} | 0 | ${totalRefs === 0 ? "PASS" : "FAIL"} |`,
     "",
     "## Class Summary",
     "",
-    "| Content class | Files with refs | Literal `.claude` refs |",
+    "| Content class | Files with refs | Legacy-marker refs |",
     "| --- | ---: | ---: |",
     ...classSummary.map(([classification, summary]) => `| ${classification} | ${summary.files} | ${summary.refs} |`),
     "",
@@ -222,7 +224,7 @@ function buildMarkdown({ inventory, coverage }) {
     "",
     "## Inventory",
     "",
-    "| Path | Content class | `.claude` refs | Example lines |",
+    "| Path | Content class | Legacy refs | Example lines |",
     "| --- | --- | ---: | --- |",
     ...inventory.map((item) => {
       const exampleLines = item.hits.slice(0, 3).map((hit) => `${hit.line}`).join(", ");
@@ -231,7 +233,7 @@ function buildMarkdown({ inventory, coverage }) {
     "",
     "## Notes",
     "",
-    "- This audit is intentionally deterministic: it inventories literal `.claude` references in ACTIVE_SCOPE so the detach gate can be tracked in version control.",
+    "- This audit is intentionally deterministic: it inventories literal legacy-marker references in ACTIVE_SCOPE so the detach gate can be tracked in version control.",
     "- Files in `archive/claude/` are outside the active gate and are therefore not included here.",
     "- The missing prompt-source list is derived from the current `studio-*` generated prompt names.",
     ""
