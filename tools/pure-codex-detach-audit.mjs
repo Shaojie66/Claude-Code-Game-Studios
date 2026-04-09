@@ -1,0 +1,297 @@
+#!/usr/bin/env node
+
+import fs from "node:fs/promises";
+import path from "node:path";
+
+const root = process.cwd();
+const activeScope = [
+  ".codex",
+  "scripts",
+  "tools",
+  "docs",
+  "README.md",
+  "AGENTS.md",
+];
+const allowedArchiveScope = ["archive/claude"];
+const expectedPromptCount = 49;
+const expectedSkillCount = 72;
+const promptSourceDir = ".codex/prompt-sources/studio";
+const promptDir = ".codex/prompts";
+const skillGlobPrefix = ".codex/skills/studio-";
+const legacyPattern = /\.claude\b/g;
+
+const args = process.argv.slice(2);
+const outputFormat = args.includes("--json") ? "json" : "markdown";
+const writeIndex = args.indexOf("--write");
+const writePath = writeIndex >= 0 ? args[writeIndex + 1] : null;
+
+if (writeIndex >= 0 && !writePath) {
+  console.error("--write requires a path");
+  process.exit(1);
+}
+
+function toPosix(relativePath) {
+  return relativePath.split(path.sep).join(path.posix.sep);
+}
+
+async function exists(relativePath) {
+  try {
+    await fs.access(path.join(root, relativePath));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function walk(relativePath) {
+  const absolutePath = path.join(root, relativePath);
+  const stat = await fs.stat(absolutePath);
+
+  if (stat.isFile()) {
+    return [relativePath];
+  }
+
+  if (!stat.isDirectory()) {
+    return [];
+  }
+
+  const entries = await fs.readdir(absolutePath, { withFileTypes: true });
+  const files = [];
+
+  for (const entry of entries.sort((a, b) => a.name.localeCompare(b.name))) {
+    const childRelative = toPosix(path.join(relativePath, entry.name));
+
+    if (entry.isDirectory()) {
+      files.push(...(await walk(childRelative)));
+    } else if (entry.isFile()) {
+      files.push(childRelative);
+    }
+  }
+
+  return files;
+}
+
+function classifyFile(relativePath) {
+  if (
+    relativePath.startsWith(`${promptDir}/studio-`) ||
+    relativePath === "docs/codex-agent-catalog.md" ||
+    relativePath === "tools/sync-claude-agents-to-codex.mjs"
+  ) {
+    return "generated role prompts";
+  }
+
+  if (relativePath.startsWith(skillGlobPrefix)) {
+    return "curated workflow skills";
+  }
+
+  return "shared workflow/docs/templates";
+}
+
+function collectLineHits(source) {
+  const lines = source.split(/\r?\n/);
+  const hits = [];
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    if (!legacyPattern.test(line)) {
+      legacyPattern.lastIndex = 0;
+      continue;
+    }
+
+    legacyPattern.lastIndex = 0;
+    hits.push({
+      line: index + 1,
+      excerpt: line.trim().slice(0, 160),
+    });
+  }
+
+  return hits;
+}
+
+async function listPromptOutputs() {
+  if (!(await exists(promptDir))) {
+    return [];
+  }
+
+  const entries = await fs.readdir(path.join(root, promptDir), { withFileTypes: true });
+  return entries
+    .filter((entry) => entry.isFile() && entry.name.startsWith("studio-") && entry.name.endsWith(".md"))
+    .map((entry) => toPosix(path.join(promptDir, entry.name)))
+    .sort();
+}
+
+async function listPromptSources() {
+  if (!(await exists(promptSourceDir))) {
+    return [];
+  }
+
+  const files = await walk(promptSourceDir);
+  return files.filter((file) => file.endsWith(".md")).sort();
+}
+
+async function listSkills() {
+  if (!(await exists(".codex/skills"))) {
+    return [];
+  }
+
+  const entries = await fs.readdir(path.join(root, ".codex/skills"), { withFileTypes: true });
+  return entries
+    .filter((entry) => entry.isDirectory() && entry.name.startsWith("studio-"))
+    .map((entry) => toPosix(path.join(".codex/skills", entry.name, "SKILL.md")))
+    .sort();
+}
+
+function buildCoverage(promptOutputs, promptSources, skills) {
+  const missingPromptSources = promptOutputs.map((promptPath) => {
+    const promptName = path.posix.basename(promptPath, ".md");
+    const roleName = promptName.replace(/^studio-/, "");
+    return `${promptSourceDir}/${roleName}.md`;
+  }).filter((sourcePath) => !promptSources.includes(sourcePath));
+
+  return {
+    promptOutputs: {
+      actual: promptOutputs.length,
+      expected: expectedPromptCount,
+    },
+    promptSources: {
+      actual: promptSources.length,
+      expected: expectedPromptCount,
+      missing: missingPromptSources,
+    },
+    skills: {
+      actual: skills.length,
+      expected: expectedSkillCount,
+    },
+  };
+}
+
+function aggregateByClass(inventory) {
+  const buckets = new Map();
+
+  for (const item of inventory) {
+    const current = buckets.get(item.classification) ?? { files: 0, refs: 0 };
+    current.files += 1;
+    current.refs += item.matchCount;
+    buckets.set(item.classification, current);
+  }
+
+  return [...buckets.entries()].sort((a, b) => a[0].localeCompare(b[0]));
+}
+
+function buildMarkdown({ inventory, coverage }) {
+  const totalRefs = inventory.reduce((sum, item) => sum + item.matchCount, 0);
+  const classSummary = aggregateByClass(inventory);
+  const lines = [
+    "# Pure Codex Detach Audit",
+    "",
+    "Generated by `node tools/pure-codex-detach-audit.mjs --write docs/pure-codex-detach-audit.md`.",
+    "",
+    "## Scope",
+    "",
+    `- ACTIVE_SCOPE: ${activeScope.map((entry) => `\`${entry}\``).join(", ")}`,
+    `- ALLOWED_ARCHIVE_SCOPE: ${allowedArchiveScope.map((entry) => `\`${entry}\``).join(", ")}`,
+    "- Forbidden dependency baseline: literal `.claude` references in active content.",
+    "",
+    "## Coverage Snapshot",
+    "",
+    "| Gate input | Actual | Expected | Status |",
+    "| --- | ---: | ---: | --- |",
+    `| Prompt sources | ${coverage.promptSources.actual} | ${coverage.promptSources.expected} | ${coverage.promptSources.actual === coverage.promptSources.expected ? "PASS" : "FAIL"} |`,
+    `| Generated prompts | ${coverage.promptOutputs.actual} | ${coverage.promptOutputs.expected} | ${coverage.promptOutputs.actual === coverage.promptOutputs.expected ? "PASS" : "FAIL"} |`,
+    `| Studio skills | ${coverage.skills.actual} | ${coverage.skills.expected} | ${coverage.skills.actual === coverage.skills.expected ? "PASS" : "FAIL"} |`,
+    `| Active files with legacy refs | ${inventory.length} | 0 | ${inventory.length === 0 ? "PASS" : "FAIL"} |`,
+    `| Total literal .claude refs in ACTIVE_SCOPE | ${totalRefs} | 0 | ${totalRefs === 0 ? "PASS" : "FAIL"} |`,
+    "",
+    "## Class Summary",
+    "",
+    "| Content class | Files with refs | Literal `.claude` refs |",
+    "| --- | ---: | ---: |",
+    ...classSummary.map(([classification, summary]) => `| ${classification} | ${summary.files} | ${summary.refs} |`),
+    "",
+    "## Missing Prompt Sources",
+    "",
+  ];
+
+  if (coverage.promptSources.missing.length === 0) {
+    lines.push("- None");
+  } else {
+    lines.push(...coverage.promptSources.missing.map((entry) => `- \`${entry}\``));
+  }
+
+  lines.push(
+    "",
+    "## Inventory",
+    "",
+    "| Path | Content class | `.claude` refs | Example lines |",
+    "| --- | --- | ---: | --- |",
+    ...inventory.map((item) => {
+      const exampleLines = item.hits.slice(0, 3).map((hit) => `${hit.line}`).join(", ");
+      return `| \`${item.path}\` | ${item.classification} | ${item.matchCount} | ${exampleLines || "-"} |`;
+    }),
+    "",
+    "## Notes",
+    "",
+    "- This audit is intentionally deterministic: it inventories literal `.claude` references in ACTIVE_SCOPE so the detach gate can be tracked in version control.",
+    "- Files in `archive/claude/` are outside the active gate and are therefore not included here.",
+    "- The missing prompt-source list is derived from the current `studio-*` generated prompt names.",
+    ""
+  );
+
+  return `${lines.join("\n")}\n`;
+}
+
+async function main() {
+  const activeFiles = [];
+  for (const scopeEntry of activeScope) {
+    if (await exists(scopeEntry)) {
+      activeFiles.push(...(await walk(scopeEntry)));
+    }
+  }
+
+  const uniqueFiles = [...new Set(activeFiles)].sort();
+  const inventory = [];
+
+  for (const relativePath of uniqueFiles) {
+    const absolutePath = path.join(root, relativePath);
+    const source = await fs.readFile(absolutePath, "utf8");
+    const hits = collectLineHits(source);
+
+    if (hits.length === 0) {
+      continue;
+    }
+
+    inventory.push({
+      path: relativePath,
+      classification: classifyFile(relativePath),
+      matchCount: hits.length,
+      hits,
+    });
+  }
+
+  const promptOutputs = await listPromptOutputs();
+  const promptSources = await listPromptSources();
+  const skills = await listSkills();
+  const coverage = buildCoverage(promptOutputs, promptSources, skills);
+
+  const payload = {
+    activeScope,
+    allowedArchiveScope,
+    coverage,
+    inventory,
+  };
+
+  const output = outputFormat === "json" ? `${JSON.stringify(payload, null, 2)}\n` : buildMarkdown(payload);
+
+  if (writePath) {
+    const absoluteWritePath = path.join(root, writePath);
+    await fs.mkdir(path.dirname(absoluteWritePath), { recursive: true });
+    await fs.writeFile(absoluteWritePath, output, "utf8");
+  }
+
+  process.stdout.write(output);
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
