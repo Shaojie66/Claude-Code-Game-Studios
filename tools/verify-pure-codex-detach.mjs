@@ -18,10 +18,10 @@ const DEFAULT_ACTIVE_SCOPE = [
   "AGENTS.md",
 ];
 
-const DEFAULT_ARCHIVE_SCOPE = "archive/claude";
 const LEGACY_ENGINE_NAME = "claude";
 const LEGACY_PATH_TOKEN = `.${LEGACY_ENGINE_NAME}`;
 const LEGACY_ARCHIVE_TOKEN = ["archive", LEGACY_ENGINE_NAME].join("/");
+const DEFAULT_ARCHIVE_SCOPE = LEGACY_ARCHIVE_TOKEN;
 
 const DEFAULTS = {
   root: process.cwd(),
