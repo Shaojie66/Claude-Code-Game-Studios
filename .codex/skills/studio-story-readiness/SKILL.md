@@ -11,7 +11,7 @@ Use this before implementation to decide whether a story is actually ready to ha
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/story-readiness/SKILL.md`
+3. `.codex/skills/studio-story-readiness/SKILL.md`
 4. The target story file or story set
 5. Supporting references such as TR registry, ADRs, control manifest, and sprint file when relevant
 
@@ -47,7 +47,7 @@ Return a clear verdict for each story:
 ## Codex Adaptation Rules
 
 - Keep this workflow read-only.
-- Do not simulate Claude `AskUserQuestion`; if scope is ambiguous, infer from repo state or ask one short question.
+- Do not simulate Claude `ask_user_dictation`; if scope is ambiguous, infer from repo state or ask one short question.
 - Prefer evidence-backed verdicts over checklist theater.
 
 ## Handoff

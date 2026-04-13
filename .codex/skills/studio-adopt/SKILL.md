@@ -1,23 +1,42 @@
 ---
 name: studio-adopt
-description: Codex bridge for the legacy Claude Code Game Studios workflow `adopt`
+description: Codex-native workflow for adopt in the game studio template
 ---
 
-# Studio Bridge: adopt
+# Studio Adopt
 
-This wrapper ports the legacy workflow defined in `.claude/skills/adopt/SKILL.md` to Codex/OMX.
+Use this when the user wants to run the adopt workflow in Codex terms and leave behind a concrete artifact, verdict, or next-step package.
 
-<Execution>
-1. Read `.claude/skills/adopt/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.codex/skills/studio-adopt/SKILL.md`
+4. The in-scope design docs, content assets, QA evidence, production files, or implementation context required by the selected workflow
+
+## Goal
+
+Produce a Codex-native adopt outcome that is explicit, repo-grounded, and ready for downstream workflows.
+
+## Workflow
+
+1. Resolve the target scope, artifact, and expected output from the user request and current repo context.
+2. Read the minimal supporting design, production, QA, or implementation artifacts needed to do the work safely.
+3. Identify missing prerequisites or dependency gaps before drafting or changing anything.
+4. Create or update the primary artifact, report, or decision package in the appropriate repository area.
+5. Surface downstream dependencies, verification needs, and follow-up workflows explicitly.
+6. Finish with the narrowest next action that keeps the workflow moving.
+
+## Codex Adaptation Rules
+
+- Ask only brief confirm-or-correct questions when a branching decision cannot be inferred from repo evidence.
+- Prefer writing or updating repo artifacts over leaving the result only in chat.
+- Keep the output anchored to the selected scope; do not broaden into unrelated redesign work.
+
+## Handoff
+
+Recommend the next step, usually another `$studio-*` workflow that consumes the artifact or verdict you just produced.
+
+## Completion
+
+Complete when the selected workflow leaves behind a concrete artifact, report, or decision package that is ready for downstream use.

@@ -11,7 +11,7 @@ Use this to judge whether story-level test files and manual evidence are actuall
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/test-evidence-review/SKILL.md`
+3. `.codex/skills/studio-test-evidence-review/SKILL.md`
 4. In-scope stories
 5. Referenced test files and manual evidence artifacts
 6. Related QA evidence directories under `production/qa/`

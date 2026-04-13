@@ -11,8 +11,8 @@ Use this when the user asks what to do next, says they are stuck, or needs quick
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/help/SKILL.md`
-4. `.claude/docs/workflow-catalog.yaml`
+3. `.codex/skills/studio-help/SKILL.md`
+4. `docs/studio/workflow-catalog.yaml`
 
 ## Lightweight Checks
 
@@ -39,7 +39,7 @@ Keep the response short and action-oriented with:
 - up to two optional side steps
 - one gate warning only if relevant
 
-Use `$studio-*` names when a matching bridge exists; otherwise mention the upstream `.claude/skills/<name>/SKILL.md` playbook.
+Use `$studio-*` names when a matching Codex-native workflow exists; otherwise mention the upstream `.codex/skills/studio-<name>/SKILL.md` playbook.
 
 ## Codex Adaptation Rules
 

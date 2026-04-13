@@ -11,7 +11,7 @@ Use this to decide whether the project is actually ready to move into the next d
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/gate-check/SKILL.md`
+3. `.codex/skills/studio-gate-check/SKILL.md`
 4. `production/stage.txt` if present
 5. In-scope design, architecture, production, QA, and release artifacts for the target gate
 

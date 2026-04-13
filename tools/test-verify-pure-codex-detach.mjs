@@ -103,7 +103,7 @@ async function testPromptSemanticFixture() {
     await writeFile(
       root,
       ".codex/prompts/studio-role-2.md",
-      "# studio-role-2\n\nUse AskUserQuestion before every reply.\n"
+      "# studio-role-2\n\nUse ask_user_dictation before every reply.\n"
     );
 
     const result = await runVerification({

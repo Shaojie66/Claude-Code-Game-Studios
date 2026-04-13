@@ -11,7 +11,7 @@ Use this to close a story after implementation and review.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/story-done/SKILL.md`
+3. `.codex/skills/studio-story-done/SKILL.md`
 4. The target story file
 5. Any linked TR/ADR/context needed to verify closure
 

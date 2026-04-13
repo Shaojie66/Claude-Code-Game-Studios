@@ -244,10 +244,9 @@ Question → Options → Decision → Draft → Approval
 ```
 
 > **Note:** These examples show the collaborative pattern as conversational text.
-> In practice, agents now use the `AskUserQuestion` tool at decision points to
-> present structured option pickers (with labels, descriptions, and multi-select).
-> The pattern is **Explain → Capture**: agents explain their analysis in
-> conversation first, then present a structured UI picker for the user's decision.
+> In practice, agents now use `ask_user_dictation` when spoken user input is
+> needed. The pattern is **Explain → Capture**: agents explain their analysis in
+> conversation first, then ask one concise question for the user's decision.
 
 ### ✅ **Collaborative Behaviors Shown:**
 
@@ -353,5 +352,5 @@ If the agent skips any of these, remind it:
 
 - **Full Principle Documentation:** [docs/COLLABORATIVE-DESIGN-PRINCIPLE.md](../COLLABORATIVE-DESIGN-PRINCIPLE.md)
 - **Workflow Guide:** [docs/WORKFLOW-GUIDE.md](../WORKFLOW-GUIDE.md)
-- **Agent Roster:** [.claude/docs/agent-roster.md](../../.claude/docs/agent-roster.md)
-- **CLAUDE.md (Collaboration Protocol):** [CLAUDE.md](../../CLAUDE.md#collaboration-protocol)
+- **Agent Roster:** [docs/studio/agent-roster.md](../../docs/studio/agent-roster.md)
+- **AGENTS.md (Active Collaboration Contract):** [AGENTS.md](../../AGENTS.md)

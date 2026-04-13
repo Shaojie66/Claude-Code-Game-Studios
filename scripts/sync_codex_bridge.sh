@@ -4,6 +4,6 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-node "$ROOT_DIR/tools/sync-claude-agents-to-codex.mjs" "$@"
+node "$ROOT_DIR/tools/sync-codex-studio-prompts.mjs" "$@"
 
-echo "Generated studio prompts and catalog from .codex/prompt-sources/studio."
+echo "Generated studio prompts and catalog from Codex-native prompt sources."

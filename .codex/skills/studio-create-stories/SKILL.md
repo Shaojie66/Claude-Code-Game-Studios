@@ -11,7 +11,7 @@ Use this to decompose one epic into story files that are ready for `$studio-stor
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/create-stories/SKILL.md`
+3. `.codex/skills/studio-create-stories/SKILL.md`
 4. The target `production/epics/<epic>/EPIC.md`
 5. Linked GDD, ADRs, control manifest, and TR registry
 
@@ -33,7 +33,7 @@ Produce implementation-sized stories with explicit traceability, test expectatio
 
 ## Codex Adaptation Rules
 
-- Do not preserve Claude approval choreography.
+- Do not preserve legacy approval choreography.
 - Prefer direct file generation once the epic decomposition is clear.
 - Keep stories small enough for one focused implementation pass.
 - Make story files concrete enough that `$studio-story-readiness` can judge them without guesswork.

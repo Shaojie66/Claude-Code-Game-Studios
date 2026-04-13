@@ -11,7 +11,7 @@ Use this to create bounded epic definitions from approved GDD and architecture m
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/create-epics/SKILL.md`
+3. `.codex/skills/studio-create-epics/SKILL.md`
 4. `design/gdd/systems-index.md`
 5. Relevant GDDs, architecture docs, ADRs, control manifest, and TR registry
 
@@ -37,7 +37,7 @@ Produce epic-level scope documents that map systems to architectural modules wit
 
 ## Codex Adaptation Rules
 
-- Do not preserve Claude approval choreography.
+- Do not preserve legacy approval choreography.
 - Warn clearly when requirements are untraced or ADR coverage is missing.
 - Stop at epic scope; do not also create stories in this workflow.
 

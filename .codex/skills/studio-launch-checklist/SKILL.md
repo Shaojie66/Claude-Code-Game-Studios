@@ -11,8 +11,8 @@ Use this near launch to generate the comprehensive cross-discipline readiness ch
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/launch-checklist/SKILL.md`
-4. `CLAUDE.md`
+3. `.codex/skills/studio-launch-checklist/SKILL.md`
+4. `docs/studio/technical-preferences.md`
 5. Current milestone and release context under `production/`
 6. Existing QA, release, and launch artifacts if present
 

@@ -11,7 +11,7 @@ Use this when a GDD changed and you need to find which architecture decisions or
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/propagate-design-change/SKILL.md`
+3. `.codex/skills/studio-propagate-design-change/SKILL.md`
 4. The changed GDD under `design/gdd/`
 5. ADRs and traceability files under `docs/architecture/`
 6. Git history for the changed GDD

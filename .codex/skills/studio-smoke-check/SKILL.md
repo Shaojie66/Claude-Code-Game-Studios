@@ -11,7 +11,7 @@ Use this after implementation and before QA handoff to decide whether the build 
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/smoke-check/SKILL.md`
+3. `.codex/skills/studio-smoke-check/SKILL.md`
 4. Current `tests/`, latest QA plan, and sprint context
 
 ## Goal

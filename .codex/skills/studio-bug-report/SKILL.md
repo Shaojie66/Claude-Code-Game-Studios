@@ -1,23 +1,42 @@
 ---
 name: studio-bug-report
-description: Codex bridge for the legacy Claude Code Game Studios workflow `bug-report`
+description: Codex-native production workflow for bug report in the game studio template
 ---
 
-# Studio Bridge: bug-report
+# Studio Bug Report
 
-This wrapper ports the legacy workflow defined in `.claude/skills/bug-report/SKILL.md` to Codex/OMX.
+Use this when the user wants the bug report workflow to produce a concrete operational artifact or decision.
 
-<Execution>
-1. Read `.claude/skills/bug-report/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.codex/skills/studio-bug-report/SKILL.md`
+4. Relevant production artifacts, QA evidence, release notes, sprint files, design docs, and implementation context for the selected scope
+
+## Goal
+
+Produce a concrete bug report artifact or verdict that reflects the current repo state, dependencies, and open risks.
+
+## Workflow
+
+1. Resolve the selected scope, timeframe, or target artifact from the user request and repo state.
+2. Gather the minimum supporting evidence from production files, QA outputs, implementation artifacts, and design/architecture context.
+3. Draft or update the primary artifact in the appropriate repo location with explicit statuses, assumptions, and dependencies.
+4. Surface blockers, missing evidence, and unresolved cross-team dependencies instead of smoothing them over.
+5. Cross-check the output against any linked stories, release criteria, QA results, or architectural constraints.
+6. End with a concise recommendation for the next workflow or escalation path.
+
+## Codex Adaptation Rules
+
+- Prefer concrete dates, statuses, and evidence paths over narrative filler.
+- Do not invent progress, approvals, or test coverage that the repo does not support.
+- When the workflow is report-oriented, write the report artifact instead of only summarizing it in chat.
+
+## Handoff
+
+Recommend the next step, usually `$studio-sprint-status`, `$studio-story-done`, `$studio-release-checklist`, `$studio-launch-checklist`, or a focused bug/fix workflow.
+
+## Completion
+
+Complete when the selected production artifact or verdict exists in the repo and accurately reflects the current state of the scoped work.

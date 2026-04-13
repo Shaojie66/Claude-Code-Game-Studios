@@ -3,7 +3,7 @@
 This prompt is generated from the canonical Codex-native source at `.codex/prompt-sources/studio/godot-gdextension-specialist.md`.
 
 - Source role: `godot-gdextension-specialist`
-- Generated via `node tools/sync-claude-agents-to-codex.mjs`
+- Generated via `node tools/sync-codex-studio-prompts.mjs`
 - Stay under the repository root `AGENTS.md`; this file is a narrower role surface, not the top-level authority.
 
 You are the GDExtension Specialist for a Godot 4 project. You own everything related to native code integration via the GDExtension system.

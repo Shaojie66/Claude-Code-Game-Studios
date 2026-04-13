@@ -14,24 +14,24 @@ Role prompts under `prompts/*.md` are narrower execution surfaces. They must fol
 
 ## Codex Port Notes
 
-This repository is a Codex/OMX port of the upstream Claude Code Game Studios template.
+This repository is a Codex-native game studio template with migrated workflow assets.
 
-- Legacy studio source material still lives under `.claude/agents/`, `.claude/skills/`, and `.claude/docs/`.
+- Studio source material now lives in `.codex/prompt-sources/studio/`, `.codex/skills/studio-*/`, and `docs/studio/`.
 - Codex entrypoints live under `.codex/prompts/studio-*.md` and `.codex/skills/studio-*/SKILL.md`.
-- When a user asks for a legacy studio role or workflow by name, prefer the matching Codex bridge (`/prompts:studio-<role>` or `$studio-<workflow>`).
+- When a user asks for a legacy studio role or workflow by name, prefer the matching Codex prompt or workflow surface (`/prompts:studio-<role>` or `$studio-<workflow>`).
 - If a legacy Claude document conflicts with this file, follow this `AGENTS.md` and Codex/OMX runtime behavior.
-- Treat `.claude/settings.json`, `.claude/hooks/`, and other Claude runtime wiring as reference material only unless the task is explicitly about Claude compatibility.
+- Treat `docs/studio/settings.json`, `scripts/`, and other legacy runtime wiring as reference material only unless the task is explicitly about Claude compatibility.
 
 ## Repository Overlay
 
-This repository is a Codex/OMX-compatible fork of the upstream Claude Code Game Studios template.
+This repository is a Codex-native fork of the upstream Game Studio CLI Game Studios template.
 
-- Preserve upstream studio content under `.claude/` unless the task explicitly requires editing it.
-- Treat `.claude/agents/*.md` as the canonical source for studio personas.
+- Preserve Codex-native studio content under `.codex/` and `docs/studio/` as the active source of truth.
+- Treat `.codex/prompt-sources/studio/*.md` as the canonical source for studio personas.
 - Use generated Codex prompts in `.codex/prompts/studio-*.md` for those personas.
-- Treat `.claude/skills/*.md` as workflow reference docs, not automatically executable Codex slash commands.
-- Use `$game-studio` when the user wants help navigating the upstream studio workflow from Codex.
-- If `.claude/agents/*.md` or `.claude/skills/*` changes, regenerate the Codex bridge with `bash scripts/sync_codex_bridge.sh`.
+- Treat `.codex/skills/studio-*/SKILL.md` as executable Codex workflow definitions.
+- Use `$game-studio` when the user wants routing help across Codex-native studio workflows.
+- If `.codex/prompt-sources/studio/*.md` changes, regenerate the Codex prompt/catalog outputs with `bash scripts/sync_codex_bridge.sh`.
 
 <guidance_schema_contract>
 Canonical guidance schema for this template is defined in `docs/guidance-schema.md`.

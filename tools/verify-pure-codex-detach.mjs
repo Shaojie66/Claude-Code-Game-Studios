@@ -10,6 +10,7 @@ const execFileAsync = promisify(execFile);
 
 const DEFAULT_ACTIVE_SCOPE = [
   ".codex",
+  ".github",
   "scripts",
   "tools",
   "docs",
@@ -127,7 +128,16 @@ const DOC_SEMANTIC_PATTERNS = [
     pattern: /\b(?:Ask Claude|Claude Code session|Claude runtime|Claude hook|Claude compatibility layer)\b/gi,
     message: "still presents active workflow as Claude-driven",
   },
+  {
+    id: "claude-cli-reference",
+    pattern: /\b(?:Open Claude Code|Claude Code version|claude --version)\b/gi,
+    message: "still points contributors at the legacy Claude CLI surface",
+  },
 ];
+
+const ALLOWED_REFERENCE_EXCEPTIONS = new Set([
+  "docs/pure-codex-detach-audit.md::legacy-archive-instruction",
+]);
 
 function parseArgs(argv) {
   const options = { ...DEFAULTS };
@@ -256,12 +266,16 @@ async function readText(root, relativePath) {
   return fs.readFile(path.join(root, relativePath), "utf8");
 }
 
-function gatherPatternMatches(text, patterns) {
+function gatherPatternMatches(text, patterns, relativePath) {
   const matches = [];
 
   for (const definition of patterns) {
     const regex = new RegExp(definition.pattern.source, definition.pattern.flags);
     for (const match of text.matchAll(regex)) {
+      const exceptionKey = `${relativePath}::${definition.id}`;
+      if (ALLOWED_REFERENCE_EXCEPTIONS.has(exceptionKey)) {
+        continue;
+      }
       matches.push({
         id: definition.id,
         match: match[0],
@@ -279,7 +293,7 @@ async function evaluateFileSet(root, files, patterns, includeMatches) {
 
   for (const relativePath of files) {
     const text = await readText(root, relativePath);
-    const matches = gatherPatternMatches(text, patterns);
+    const matches = gatherPatternMatches(text, patterns, relativePath);
 
     if (matches.length > 0) {
       hits.push({

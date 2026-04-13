@@ -145,7 +145,7 @@ Detailed dimensions:
 `Non-goals` and `Decision Boundaries` are mandatory readiness gates. Ask about them early and keep revisiting them until they are explicit.
 
 ### 2b) Ask the question
-Use structured user-input tooling available in the runtime (`AskUserQuestion` / equivalent) and present:
+Use structured user-input tooling available in the runtime (`ask_user_dictation` / equivalent) and present:
 
 ```
 Round {n} | Target: {weakest_dimension} | Ambiguity: {score}%

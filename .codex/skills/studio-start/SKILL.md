@@ -15,14 +15,14 @@ Figure out where the project actually stands, set review mode if needed, and giv
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/start/SKILL.md`
-4. `.claude/docs/technical-preferences.md`
+3. `.codex/skills/studio-start/SKILL.md`
+4. `docs/studio/technical-preferences.md`
 
 ## Detect Project State
 
 Inspect, without writing:
 
-- whether an engine is configured in `.claude/docs/technical-preferences.md`
+- whether an engine is configured in `docs/studio/technical-preferences.md`
 - whether `design/gdd/game-concept.md` exists
 - how many markdown files exist under `design/gdd/`
 - whether there is code in `src/`
@@ -54,7 +54,7 @@ After the first action, list a short follow-on path of at most 5 steps using `$s
 
 ## Codex Adaptation Rules
 
-- Do not mimic Claude `AskUserQuestion`; ask a concise plain-language question only when the answer materially changes the path and cannot be inferred.
+- Do not mimic Claude `ask_user_dictation`; ask a concise plain-language question only when the answer materially changes the path and cannot be inferred.
 - Do not wait for permission on low-risk repo inspection or on writing `production/review-mode.txt`.
 - Prefer autonomous routing based on repo state.
 

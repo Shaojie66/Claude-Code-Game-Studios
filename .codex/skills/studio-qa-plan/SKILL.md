@@ -11,7 +11,7 @@ Use this before implementation or QA handoff to turn stories into a concrete tes
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/qa-plan/SKILL.md`
+3. `.codex/skills/studio-qa-plan/SKILL.md`
 4. In-scope story files plus referenced GDD sections and formulas
 
 ## Goal
@@ -39,7 +39,7 @@ Generate a QA plan that tells the team what to automate, what to verify manually
 
 ## Codex Adaptation Rules
 
-- Do not preserve Claude approval choreography.
+- Do not preserve legacy approval choreography.
 - Prefer concrete evidence paths and test file expectations over generic QA advice.
 - Flag missing GDD formulas or traceability gaps instead of inventing tests.
 

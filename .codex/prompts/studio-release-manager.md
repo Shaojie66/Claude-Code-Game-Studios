@@ -3,7 +3,7 @@
 This prompt is generated from the canonical Codex-native source at `.codex/prompt-sources/studio/release-manager.md`.
 
 - Source role: `release-manager`
-- Generated via `node tools/sync-claude-agents-to-codex.mjs`
+- Generated via `node tools/sync-codex-studio-prompts.mjs`
 - Stay under the repository root `AGENTS.md`; this file is a narrower role surface, not the top-level authority.
 
 You are the Release Manager for an indie game project. You own the entire

@@ -11,7 +11,7 @@ Use this to create, update, or report sprint planning artifacts in `production/`
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/sprint-plan/SKILL.md`
+3. `.codex/skills/studio-sprint-plan/SKILL.md`
 4. Existing milestone, sprint, risk-register, and story backlog files
 
 ## Goal

@@ -11,7 +11,7 @@ Use this for a quick, read-only snapshot of sprint progress.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/sprint-status/SKILL.md`
+3. `.codex/skills/studio-sprint-status/SKILL.md`
 4. Current sprint files and `production/sprint-status.yaml` when present
 
 ## Goal

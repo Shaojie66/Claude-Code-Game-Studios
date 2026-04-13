@@ -11,8 +11,8 @@ Use this when the project needs shared factories, assertions, or helper scaffold
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/test-helpers/SKILL.md`
-4. `.claude/docs/technical-preferences.md`
+3. `.codex/skills/studio-test-helpers/SKILL.md`
+4. `docs/studio/technical-preferences.md`
 5. Existing tests under `tests/`
 6. `design/gdd/systems-index.md` and in-scope GDDs
 

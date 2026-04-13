@@ -11,7 +11,7 @@ Use this for architectural and quality review of a changed file set or story imp
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/code-review/SKILL.md`
+3. `.codex/skills/studio-code-review/SKILL.md`
 4. Relevant story, ADR, or GDD files when the change is tied to them
 
 ## Workflow
@@ -33,7 +33,7 @@ Use this for architectural and quality review of a changed file set or story imp
 ## Codex Adaptation Rules
 
 - Prefer direct Codex review output or `::code-comment` findings when needed.
-- Do not recreate Claude approval choreography.
+- Do not recreate legacy approval choreography.
 - Report “no issues found” explicitly when the change is sound.
 
 ## Handoff

@@ -59,7 +59,7 @@ fi
 
 ## Step 2: Main Menu
 
-Use AskUserQuestion:
+Use ask_user_dictation:
 
 **Question:** "What would you like to configure?"
 
@@ -87,7 +87,7 @@ Do not write these as generic command/webhook aliases.
 
 ### 4a) `custom_webhook_command`
 
-Use AskUserQuestion to collect:
+Use ask_user_dictation to collect:
 - URL
 - Optional headers
 - Optional method (`POST` default, or `PUT`)
@@ -114,7 +114,7 @@ jq \
 
 ### 4b) `custom_cli_command`
 
-Use AskUserQuestion to collect:
+Use ask_user_dictation to collect:
 - Command template (supports `{{event}}`, `{{instruction}}`, `{{sessionId}}`, `{{projectPath}}`)
 - Optional event list
 - Optional instruction template

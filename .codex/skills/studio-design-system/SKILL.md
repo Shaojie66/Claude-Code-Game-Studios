@@ -11,7 +11,7 @@ Use this to author or retrofit one system GDD under `design/gdd/`.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/design-system/SKILL.md`
+3. `.codex/skills/studio-design-system/SKILL.md`
 4. `design/gdd/game-concept.md`
 5. `design/gdd/systems-index.md`
 6. Related GDDs for dependencies when relevant
@@ -40,7 +40,7 @@ Create or complete a system design doc with enough specificity that downstream a
 ## Codex Adaptation Rules
 
 - Do not preserve upstream “ask before edit” gates.
-- Do not mimic multi-tab `AskUserQuestion`; use concise text questions only for true design branches.
+- Do not mimic multi-tab `ask_user_dictation`; use concise text questions only for true design branches.
 - Prefer incremental retrofits over wholesale replacement when a partial GDD already exists.
 
 ## Handoff

@@ -439,7 +439,8 @@ echo "Total skills across all directories: $TOTAL"
 
 #### Step 3: Quick Actions Menu
 
-After scanning, use the AskUserQuestion tool to offer these options:
+After scanning, use `ask_user_dictation` to ask what the user wants to do next.
+State the options in the prompt:
 
 **Question:** "What would you like to do with your local skills?"
 

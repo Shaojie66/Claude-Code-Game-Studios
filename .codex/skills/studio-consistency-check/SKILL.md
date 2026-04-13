@@ -1,23 +1,42 @@
 ---
 name: studio-consistency-check
-description: Codex bridge for the legacy Claude Code Game Studios workflow `consistency-check`
+description: Codex-native review workflow for consistency check in the game studio template
 ---
 
-# Studio Bridge: consistency-check
+# Studio Consistency Check
 
-This wrapper ports the legacy workflow defined in `.claude/skills/consistency-check/SKILL.md` to Codex/OMX.
+Use this when the user wants a grounded consistency check pass over a story, feature, system, or release scope.
 
-<Execution>
-1. Read `.claude/skills/consistency-check/SKILL.md` in full before taking action.
-2. Use its phases, required artifacts, dependencies, and completion criteria as the workflow contract.
-3. Adapt Claude-specific constructs:
-- `AskUserQuestion`: ask only when the needed information cannot be derived safely; otherwise inspect the repo and proceed autonomously.
-- `Task`: use Codex native subagents or `/prompts:studio-<role>` wrappers for specialist delegation.
-- `Write` and `Edit` approval gates: follow `AGENTS.md` instead of waiting for legacy approval language.
-- Slash-command references like `/foo`: translate to `$studio-foo` when the bridge exists; otherwise read the legacy skill file directly.
-- References to `.claude/settings.json` hooks or Claude runtime behavior: treat them as historical reference only. Codex runtime behavior comes from `.codex/config.toml`, `AGENTS.md`, and OMX.
-4. Keep the legacy workflow's sequencing, artifacts, and verification rigor. Do not silently skip phases that materially protect correctness.
-5. If the legacy workflow mainly produces docs, reports, or plans, create or update those repo artifacts instead of only summarizing them in chat.
+## Read First
 
-<Completion>
-The task is complete only when the requested workflow outcome exists in the repo or has been verified under Codex/OMX conventions.
+1. `AGENTS.md`
+2. `docs/codex-port.md`
+3. `.codex/skills/studio-consistency-check/SKILL.md`
+4. In-scope design docs, code, data, ADRs, QA evidence, or release artifacts relevant to the review target
+
+## Goal
+
+Produce an evidence-backed consistency check verdict with exact findings, risks, and recommended follow-up actions.
+
+## Workflow
+
+1. Resolve the review target from explicit paths, current diff, active sprint/story context, or the user request.
+2. Read the in-scope artifacts fully rather than relying on summaries.
+3. Evaluate the target against the workflow-specific concerns, governing GDDs, ADRs, manifests, and test evidence when present.
+4. Record findings with exact file references or artifact references, separating blocking issues from advisories.
+5. If the workflow naturally produces a report artifact, write or update it in the repo; otherwise return a concise review verdict grounded in the files you read.
+6. Recommend the narrowest next step that resolves the highest-signal issue or advances the validated work.
+
+## Codex Adaptation Rules
+
+- Do not invent findings; report `no issues found` explicitly when the target is sound.
+- Flag missing evidence, missing formulas, or missing traceability instead of guessing.
+- Keep the review scoped to the selected target unless correctness requires widening it.
+
+## Handoff
+
+Recommend the next step, usually a focused fix pass, `$studio-dev-story`, `$studio-gate-check`, or another validation workflow.
+
+## Completion
+
+Complete when the user has an actionable review artifact or verdict with concrete findings and next actions.

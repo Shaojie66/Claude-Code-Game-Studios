@@ -11,7 +11,7 @@ Use this after concept definition to turn the game idea into a systems index wit
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/map-systems/SKILL.md`
+3. `.codex/skills/studio-map-systems/SKILL.md`
 4. `design/gdd/game-concept.md`
 5. `design/gdd/game-pillars.md` if present
 6. Existing `design/gdd/systems-index.md` if present

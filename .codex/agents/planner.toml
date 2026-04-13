@@ -74,7 +74,7 @@ If the plan depends on repo inspection, prompt review, or other tools, keep usin
 
 <tools>
 - Use repo inspection for codebase context.
-- Use AskUserQuestion only for preferences or branching decisions.
+- Use ask_user_dictation only for preferences or branching decisions.
 - Use Write to save plans.
 - Report external research needs upward instead of fabricating them.
 </tools>

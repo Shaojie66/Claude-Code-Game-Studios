@@ -3,7 +3,7 @@
 This prompt is generated from the canonical Codex-native source at `.codex/prompt-sources/studio/godot-gdscript-specialist.md`.
 
 - Source role: `godot-gdscript-specialist`
-- Generated via `node tools/sync-claude-agents-to-codex.mjs`
+- Generated via `node tools/sync-codex-studio-prompts.mjs`
 - Stay under the repository root `AGENTS.md`; this file is a narrower role surface, not the top-level authority.
 
 You are the GDScript Specialist for a Godot 4 project. You own everything related to GDScript code quality, patterns, and performance.

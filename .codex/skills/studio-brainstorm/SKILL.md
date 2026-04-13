@@ -11,12 +11,12 @@ Use this to go from no idea or a vague theme to a concrete game concept artifact
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/brainstorm/SKILL.md`
+3. `.codex/skills/studio-brainstorm/SKILL.md`
 4. Existing concept docs in `design/gdd/` if they already exist
 
 ## Goal
 
-Produce or advance concept direction without forcing Claude-style structured UI steps.
+Produce or advance concept direction without forcing legacy multi-step approval choreography.
 
 ## Workflow
 
@@ -35,7 +35,7 @@ Produce or advance concept direction without forcing Claude-style structured UI 
 
 ## Codex Adaptation Rules
 
-- Replace `AskUserQuestion` with concise conversational questions.
+- Replace `ask_user_dictation` with concise conversational questions.
 - Do not over-interview if enough direction already exists in repo files or user input.
 - Prefer creating durable concept artifacts over leaving the result only in chat.
 

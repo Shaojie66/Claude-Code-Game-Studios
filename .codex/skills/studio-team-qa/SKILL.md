@@ -11,7 +11,7 @@ Use this to run a structured QA cycle across a sprint or feature scope and produ
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/team-qa/SKILL.md`
+3. `.codex/skills/studio-team-qa/SKILL.md`
 4. In-scope stories under `production/sprints/` or feature scope files
 5. Current QA plans and smoke reports under `production/qa/`
 6. `production/stage.txt` and session-state files if present
@@ -48,7 +48,7 @@ Produce a concrete QA package for the selected scope: strategy, test-plan expect
 
 ## Codex Adaptation Rules
 
-- Replace Claude approval-heavy choreography with evidence-backed checkpoints at phase boundaries.
+- Replace legacy approval-heavy choreography with evidence-backed checkpoints at phase boundaries.
 - Do not proceed into broader QA when smoke status is failed or unknown for a critical path.
 - Prefer writing QA artifacts into `production/qa/` over summarizing them only in chat.
 - Surface missing acceptance criteria, missing test evidence, and ADR blockers instead of guessing.

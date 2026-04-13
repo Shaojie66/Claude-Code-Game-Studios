@@ -1,32 +1,32 @@
 # Codex Port Guide
 
-This repository started as a Claude Code template. It now includes a Codex/OMX compatibility layer so the studio roles and workflows remain usable without rewriting the original source material by hand.
+This repository runs as a Codex-native / OMX-native game studio workspace. Archived upstream material may still exist for reference, but the active runtime and maintenance model are owned from the Codex surfaces in this repo.
 
 ## What Changed
 
 - Project-level OMX scaffolding now lives in `.codex/`, `.omx/`, and `AGENTS.md`.
-- Legacy role briefs under `.claude/agents/` are exposed to Codex as `/prompts:studio-<role>`.
-- Legacy workflow skills under `.claude/skills/` are exposed to Codex as `$studio-<workflow>`.
+- Role briefs are authored under `.codex/prompt-sources/studio/` and generated to `/prompts:studio-<role>` surfaces.
+- Workflow skills are authored and executed from `.codex/skills/studio-*/SKILL.md` as `$studio-<workflow>`.
 - `docs/codex-agent-catalog.md` maps upstream role names to the generated Codex prompt names.
-- The generated bridge layer is intentionally thin: it reads the legacy source file at runtime and adapts Claude-specific concepts to Codex conventions.
-- A small set of high-traffic workflows use hand-authored Codex-native wrappers instead of the generic bridge: `$studio-start`, `$studio-help`, `$studio-project-stage-detect`, `$studio-dev-story`, `$studio-brainstorm`, `$studio-map-systems`, `$studio-design-system`, `$studio-design-review`, `$studio-review-all-gdds`, `$studio-propagate-design-change`, `$studio-create-architecture`, `$studio-architecture-decision`, `$studio-architecture-review`, `$studio-create-control-manifest`, `$studio-code-review`, `$studio-story-readiness`, `$studio-story-done`, `$studio-create-epics`, `$studio-create-stories`, `$studio-sprint-plan`, `$studio-sprint-status`, `$studio-qa-plan`, `$studio-smoke-check`, `$studio-team-qa`, `$studio-gate-check`, `$studio-regression-suite`, `$studio-test-evidence-review`, `$studio-test-flakiness`, `$studio-test-helpers`, `$studio-release-checklist`, `$studio-launch-checklist`, `$studio-setup-engine`, and `$studio-test-setup`.
+- The generated prompt layer is Codex-native and reads only `.codex/prompt-sources/studio/` inputs.
+- All `studio-*` workflows are now active Codex-native skills. A curated subset remains the highest-signal entry path for the common gameplay, design, architecture, QA, and release loops: `$studio-start`, `$studio-help`, `$studio-project-stage-detect`, `$studio-dev-story`, `$studio-brainstorm`, `$studio-map-systems`, `$studio-design-system`, `$studio-design-review`, `$studio-review-all-gdds`, `$studio-propagate-design-change`, `$studio-create-architecture`, `$studio-architecture-decision`, `$studio-architecture-review`, `$studio-create-control-manifest`, `$studio-code-review`, `$studio-story-readiness`, `$studio-story-done`, `$studio-create-epics`, `$studio-create-stories`, `$studio-sprint-plan`, `$studio-sprint-status`, `$studio-qa-plan`, `$studio-smoke-check`, `$studio-team-qa`, `$studio-gate-check`, `$studio-regression-suite`, `$studio-test-evidence-review`, `$studio-test-flakiness`, `$studio-test-helpers`, `$studio-release-checklist`, `$studio-launch-checklist`, `$studio-setup-engine`, and `$studio-test-setup`.
 
 ## Recommended Entry Points
 
 - Run `codex` from the repository root.
 - Use `$studio-start` for first-time onboarding.
 - Use `/prompts:studio-creative-director` or another `studio-*` prompt when you want a specific game-studio specialist.
-- Use `$studio-dev-story`, `$studio-team-ui`, `$studio-code-review`, and the other `studio-*` skills to execute the legacy workflows under Codex.
+- Use `$studio-dev-story`, `$studio-team-ui`, `$studio-code-review`, and the other `studio-*` skills as the active Codex-native workflows.
 
 ## Runtime Rules
 
 - `AGENTS.md` is the top-level authority.
 - `.codex/config.toml` and OMX control Codex runtime behavior.
-- `.claude/settings.json` and `.claude/hooks/` are kept for upstream parity and documentation, but they are not the active runtime for Codex.
+- `docs/studio/settings.json` and `scripts/` are kept for upstream parity and documentation, but they are not the active runtime for Codex.
 
-## Regenerating the Bridge
+## Regenerating Prompts And Catalog
 
-When you pull upstream changes from the original Claude template, regenerate the Codex wrappers:
+
 
 ```bash
 bash scripts/sync_codex_bridge.sh
@@ -35,13 +35,13 @@ bash scripts/sync_codex_bridge.sh
 This script rebuilds:
 
 - `.codex/prompts/studio-*.md`
-- `.codex/skills/studio-*/SKILL.md`
+- `docs/codex-agent-catalog.md`
 
-The bridge is safe to rerun because the generated files are deterministic wrappers over the legacy `.claude` sources. The hand-authored curated wrappers listed above are preserved and not overwritten by the sync script.
+The sync is safe to rerun because prompts and the catalog are deterministic outputs generated from `.codex/prompt-sources/studio/`. Active `studio-*` skill files are hand-maintained Codex-native sources of truth and are not regenerated by this script.
 
 ## Curated vs Generated
 
-Use curated wrappers first for the main Codex path:
+Use the curated high-traffic workflows first for the main Codex path:
 
 - ideation: `$studio-brainstorm`, `$studio-map-systems`
 - engine/bootstrap: `$studio-setup-engine`, `$studio-test-setup`
@@ -59,4 +59,4 @@ Use curated wrappers first for the main Codex path:
 - release prep: `$studio-release-checklist`, `$studio-launch-checklist`
 - design authoring: `$studio-design-system`
 
-Treat the rest of the `$studio-*` surface as generated bridges unless they are explicitly documented as curated.
+All `$studio-*` workflows are Codex-native. Generated prompt outputs are derived from `.codex/prompt-sources/studio/`, while `.codex/skills/studio-*/SKILL.md` remains the maintained workflow source for skills.

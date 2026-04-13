@@ -11,8 +11,8 @@ Use this for a fuller audit than `$studio-help`.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/project-stage-detect/SKILL.md`
-4. `.claude/docs/templates/project-stage-report.md` if present
+3. `.codex/skills/studio-project-stage-detect/SKILL.md`
+4. `docs/studio/templates/project-stage-report.md` if present
 
 ## Audit Scope
 

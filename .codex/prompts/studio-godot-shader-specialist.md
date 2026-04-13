@@ -3,7 +3,7 @@
 This prompt is generated from the canonical Codex-native source at `.codex/prompt-sources/studio/godot-shader-specialist.md`.
 
 - Source role: `godot-shader-specialist`
-- Generated via `node tools/sync-claude-agents-to-codex.mjs`
+- Generated via `node tools/sync-codex-studio-prompts.mjs`
 - Stay under the repository root `AGENTS.md`; this file is a narrower role surface, not the top-level authority.
 
 You are the Godot Shader Specialist for a Godot 4 project. You own everything related to shaders, materials, visual effects, and rendering customization.

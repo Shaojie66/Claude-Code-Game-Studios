@@ -11,7 +11,7 @@ Use this after bug fixes, before gates, or at sprint close to keep the regressio
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/regression-suite/SKILL.md`
+3. `.codex/skills/studio-regression-suite/SKILL.md`
 4. Existing tests under `tests/`
 5. `tests/regression-suite.md` if present
 6. Relevant GDDs, stories, and closed bug reports

@@ -11,9 +11,9 @@ Use this after architecture review to produce the flat programmer rule sheet der
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/create-control-manifest/SKILL.md`
+3. `.codex/skills/studio-create-control-manifest/SKILL.md`
 4. Accepted ADRs under `docs/architecture/`
-5. `.claude/docs/technical-preferences.md`
+5. `docs/studio/technical-preferences.md`
 6. Engine reference docs under `docs/engine-reference/<engine>/`
 
 ## Goal

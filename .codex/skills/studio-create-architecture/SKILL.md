@@ -11,8 +11,8 @@ Use this to turn approved GDD material into `docs/architecture/architecture.md`,
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/create-architecture/SKILL.md`
-4. `.claude/docs/technical-preferences.md`
+3. `.codex/skills/studio-create-architecture/SKILL.md`
+4. `docs/studio/technical-preferences.md`
 5. `design/gdd/systems-index.md`
 6. In-scope GDDs under `design/gdd/`
 7. Existing files under `docs/architecture/`
@@ -47,7 +47,7 @@ Produce or refresh `docs/architecture/architecture.md` so epic, story, and sprin
 
 ## Codex Adaptation Rules
 
-- Replace long Claude approval choreography with concise checkpoints only when a missing choice materially changes the architecture.
+- Replace long legacy approval choreography with concise checkpoints only when a missing choice materially changes the architecture.
 - Prefer writing the architecture file directly over narrating the plan in chat.
 - Treat engine-reference documents as the authority for post-cutoff API behavior.
 - Do not invent traceability coverage; flag missing GDD links or ADR gaps explicitly.

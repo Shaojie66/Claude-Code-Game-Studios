@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">Codex Game Studios</h1>
   <p align="center">
-    A Codex/OMX-compatible fork of Claude Code Game Studios.
+    A Codex-native game studio workspace for Codex and OMX.
     <br />
     Keep the upstream studio playbooks, but run them from Codex.
   </p>
@@ -9,10 +9,10 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-  <a href=".claude/agents"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
-  <a href=".claude/skills"><img src="https://img.shields.io/badge/skills-72-green" alt="72 Skills"></a>
-  <a href=".claude/hooks"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
-  <a href=".claude/rules"><img src="https://img.shields.io/badge/rules-11-red" alt="11 Rules"></a>
+  <a href=".codex/prompt-sources/studio"><img src="https://img.shields.io/badge/agents-49-blueviolet" alt="49 Agents"></a>
+  <a href=".codex/skills"><img src="https://img.shields.io/badge/skills-72-green" alt="72 Skills"></a>
+  <a href="scripts"><img src="https://img.shields.io/badge/hooks-12-orange" alt="12 Hooks"></a>
+  <a href="docs/studio/rules"><img src="https://img.shields.io/badge/rules-11-red" alt="11 Rules"></a>
   <a href="./AGENTS.md"><img src="https://img.shields.io/badge/runtime-Codex%20%2B%20OMX-1f6feb" alt="Runtime: Codex + OMX"></a>
   <a href="https://www.buymeacoffee.com/donchitos3"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-Support%20this%20project-FFDD00?logo=buymeacoffee&logoColor=black" alt="Buy Me a Coffee"></a>
   <a href="https://github.com/sponsors/Donchitos"><img src="https://img.shields.io/badge/GitHub%20Sponsors-Support%20this%20project-ea4aaa?logo=githubsponsors&logoColor=white" alt="GitHub Sponsors"></a>
@@ -24,7 +24,7 @@
 
 Building a game solo with AI is powerful — but a single chat session has no structure. No one stops you from hardcoding magic numbers, skipping design docs, or writing spaghetti code. There's no QA pass, no design review, no one asking "does this actually fit the game's vision?"
 
-**Codex Game Studios** keeps the upstream studio structure, but adapts it to Codex. Instead of throwing away the original agent and workflow library, this fork preserves `.claude/` as the knowledge base and adds a Codex compatibility layer on top: OMX project setup, generated Codex prompts, and Codex-native routing docs.
+**Codex Game Studios** keeps the upstream studio knowledge base, but runs it through Codex-native surfaces. The active runtime and maintenance model live in `.codex/`, `.omx/`, and `AGENTS.md`, with upstream material retained only as archived or reference content when needed.
 
 The result: you still make every decision, but now you have a team that asks the right questions, catches mistakes early, and keeps your project organized from first brainstorm to launch.
 
@@ -32,12 +32,12 @@ The result: you still make every decision, but now you have a team that asks the
 
 This fork intentionally separates upstream content from Codex runtime surfaces:
 
-- `.claude/agents/` and `.claude/skills/` stay as the upstream source material
-- `.codex/prompts/studio-*.md` are generated Codex prompts built from upstream agents
+- `.codex/prompt-sources/studio/` and `.codex/skills/studio-*/` are the source material
+- `.codex/prompts/studio-*.md` are generated Codex prompts built from `.codex/prompt-sources/studio/`
 - `AGENTS.md` is the Codex top-level contract
 - `$game-studio` is the Codex-native router skill for this repository
 
-Read [docs/codex-port.md](docs/codex-port.md) for the exact compatibility model.
+Read [docs/codex-port.md](docs/codex-port.md) for the current Codex-native maintenance model.
 
 ---
 
@@ -142,11 +142,11 @@ Use curated Codex-native workflows first:
 - `$studio-release-checklist`
 - `$studio-launch-checklist`
 
-Generated `$studio-*` bridges still exist for the rest of the upstream workflow catalog.
+The remaining `$studio-*` workflows are also active Codex-native skills. Prompts are generated from `.codex/prompt-sources/studio/`; skill files under `.codex/skills/studio-*/SKILL.md` are the maintained workflow definitions.
 
 ## Upstream Workflow Catalog
 
-The upstream template still defines the original Claude-oriented workflow inventory. Treat it as reference source material that this fork maps into Codex:
+The upstream template still defines the original workflow inventory. Treat it as reference source material that this workspace now exposes through Codex-native prompts and skills:
 
 **Onboarding & Navigation**
 `/start` `/help` `/project-stage-detect` `/setup-engine` `/adopt`
@@ -200,7 +200,7 @@ All hooks fail gracefully if optional tools are missing — nothing breaks, you 
 
 1. **Clone your fork**:
    ```bash
-   git clone https://github.com/Shaojie66/Claude-Code-Game-Studios.git my-game
+   git clone <your-fork-url> my-game
    cd my-game
    ```
 
@@ -209,7 +209,7 @@ All hooks fail gracefully if optional tools are missing — nothing breaks, you 
    omx setup --force --scope project
    ```
 
-3. **Generate the Codex bridge from the upstream Claude assets**:
+3. **Generate the Codex prompt/catalog surfaces**:
    ```bash
    bash scripts/sync_codex_bridge.sh
    ```
@@ -220,20 +220,20 @@ All hooks fail gracefully if optional tools are missing — nothing breaks, you 
    - `/prompts:studio-lead-programmer` — code architecture and implementation review
    - `/prompts:studio-godot-specialist` / `/prompts:studio-unity-specialist` / `/prompts:studio-unreal-specialist` — engine-specific work
 
-5. **Use the generated Codex bridges and upstream playbooks together**:
-   - `$studio-start` — Codex-native onboarding wrapper
-   - `$studio-help` — Codex-native “what next?” helper
-   - `$studio-project-stage-detect` — Codex-native project audit wrapper
-   - `$studio-dev-story` — Codex-native implementation wrapper
-   - `$studio-design-system` — generated bridge for GDD authoring
-   - `$studio-test-setup` — generated bridge for test scaffolding
-   - `.claude/skills/...` — source playbooks if you need the underlying workflow details
+5. **Use the Codex-native workflows directly**:
+   - `$studio-start` — onboarding
+   - `$studio-help` — “what next?” routing
+   - `$studio-project-stage-detect` — project audit
+   - `$studio-dev-story` — implementation workflow
+   - `$studio-design-system` — GDD authoring workflow
+   - `$studio-test-setup` — test scaffolding workflow
+   - `.codex/skills/studio-*/SKILL.md` — maintained workflow definitions when you need the exact contract
 
 6. **Use the upstream skill docs as reference playbooks**:
-   - `.claude/skills/start/SKILL.md` — onboarding flow logic
-   - `.claude/skills/brainstorm/SKILL.md` — ideation workflow
-   - `.claude/skills/design-system/SKILL.md` — GDD authoring flow
-   - `.claude/skills/dev-story/SKILL.md` — implementation workflow
+   - `.codex/skills/studio-start/SKILL.md` — onboarding flow logic
+   - `.codex/skills/studio-brainstorm/SKILL.md` — ideation workflow
+   - `.codex/skills/studio-design-system/SKILL.md` — GDD authoring flow
+   - `.codex/skills/studio-dev-story/SKILL.md` — implementation workflow
 
 ## Upgrading
 
@@ -245,22 +245,18 @@ versions, and which files are safe to overwrite vs. which need a manual merge.
 
 ```
 AGENTS.md                           # Codex/OMX master configuration
-CLAUDE.md                           # Upstream legacy project context (kept as reference)
-.claude/
-  settings.json                     # Upstream Claude runtime config (reference only)
-  agents/                           # Canonical upstream studio role definitions
-  skills/                           # Canonical upstream workflow playbooks
-  hooks/                            # Upstream Claude hook scripts
-  rules/                            # Upstream path-scoped coding standards
-  statusline.sh                     # Upstream status line script
-  docs/
-    workflow-catalog.yaml           # 7-phase pipeline definition (read by /help)
-    templates/                      # 39 document templates
 .codex/
-  prompts/                          # OMX prompts + generated studio prompts
+  prompt-sources/studio/            # Canonical studio role source material
+  prompts/                          # Generated Codex studio prompts
   skills/                           # Codex-native skills for this fork
-  agents/                           # Native OMX agent configs
 .omx/                               # Project-local OMX state, plans, logs, and HUD config
+docs/
+  codex-port.md                     # Codex migration and maintenance guide
+  studio/
+    quick-start.md                  # Studio workflow orientation
+    workflow-catalog.yaml           # Studio workflow catalog
+    templates/                      # Document templates
+    hooks-reference/                # Hook reference docs
 src/                                # Game source code
 assets/                             # Art, audio, VFX, shaders, data files
 design/                             # GDDs, narrative docs, level designs
@@ -283,7 +279,7 @@ Agents follow a structured delegation model:
 4. **Change propagation** — cross-department changes are coordinated by `producer`
 5. **Domain boundaries** — agents don't modify files outside their domain without explicit delegation
 
-In this fork, those studio roles are invoked from Codex via `/prompts:studio-*`, generated from the upstream `.claude/agents/*.md` files.
+In this fork, those studio roles are invoked from Codex via `/prompts:studio-*`, generated from the upstream `.codex/prompt-sources/studio/*.md` files.
 
 ### Collaborative, Not Autonomous
 
@@ -309,12 +305,12 @@ You stay in control. The agents provide structure and expertise, not autonomy.
 | `session-start.sh` | Session open | Shows current branch and recent commits for orientation |
 | `detect-gaps.sh` | Session open | Detects fresh projects (suggests `/start`) and missing design docs when code or prototypes exist |
 | `pre-compact.sh` | Before compaction | Preserves session progress notes |
-| `post-compact.sh` | After compaction | Reminds Claude to restore session state from `active.md` |
+| `post-compact.sh` | After compaction | Reminds the next Codex turn to restore session state from `active.md` |
 | `notify.sh` | Notification event | Shows Windows toast notification via PowerShell |
 | `session-stop.sh` | Session close | Archives `active.md` to session log and records git activity |
 | `log-agent.sh` | Agent spawned | Audit trail start — logs subagent invocation |
 | `log-agent-stop.sh` | Agent stops | Audit trail stop — completes subagent record |
-| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.claude/skills/` change |
+| `validate-skill-change.sh` | PostToolUse (Write/Edit) | Advises running `/skill-test` after any `.codex/skills/studio-*/` change |
 
 > **Note**: `validate-commit.sh`, `validate-assets.sh`, and `validate-skill-change.sh` fire on every Bash/Write tool call and exit immediately (exit 0) when the command or file path is not relevant. This is normal hook behavior — not a performance concern.
 
@@ -363,14 +359,14 @@ Tested on **Windows 10** with Git Bash. All hooks use POSIX-compatible patterns 
 
 ## Community
 
-- **Discussions** — [GitHub Discussions](https://github.com/Donchitos/Claude-Code-Game-Studios/discussions) for questions, ideas, and showcasing what you've built
-- **Issues** — [Bug reports and feature requests](https://github.com/Donchitos/Claude-Code-Game-Studios/issues)
+- **Discussions** — use this repository's Discussions tab for questions, ideas, and showcases
+- **Issues** — use this repository's Issues tab for bug reports and feature requests
 
 ---
 
 ## Supporting This Project
 
-Claude Code Game Studios is free and open source. If it saves you time or helps you ship your game, consider supporting continued development:
+Game Studio CLI Game Studios is free and open source. If it saves you time or helps you ship your game, consider supporting continued development:
 
 <p>
   <a href="https://www.buymeacoffee.com/donchitos3"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee"></a>
@@ -381,11 +377,11 @@ Claude Code Game Studios is free and open source. If it saves you time or helps 
 - **[Buy Me a Coffee](https://www.buymeacoffee.com/donchitos3)** — one-time support
 - **[GitHub Sponsors](https://github.com/sponsors/Donchitos)** — recurring support through GitHub
 
-Sponsorships help fund time spent maintaining skills, adding new agents, keeping up with Claude Code and engine API changes, and responding to community issues.
+Sponsorships help fund time spent maintaining skills, adding new agents, keeping up with Game Studio CLI and engine API changes, and responding to community issues.
 
 ---
 
-*Built for Claude Code. Maintained and extended — contributions welcome via [GitHub Discussions](https://github.com/Donchitos/Claude-Code-Game-Studios/discussions).*
+*Built for Game Studio CLI. Maintained and extended — contributions welcome through this repository's Discussions tab.*
 
 ## License
 

@@ -6,19 +6,20 @@ import path from "node:path";
 const root = process.cwd();
 const activeScope = [
   ".codex",
+  ".github",
   "scripts",
   "tools",
   "docs",
   "README.md",
   "AGENTS.md",
 ];
-const allowedArchiveScope = ["archive/claude"];
 const expectedPromptCount = 49;
 const expectedSkillCount = 72;
 const promptSourceDir = ".codex/prompt-sources/studio";
 const promptDir = ".codex/prompts";
 const skillGlobPrefix = ".codex/skills/studio-";
 const legacyDirectoryName = "claude";
+const allowedArchiveScope = [`archive/${legacyDirectoryName}`];
 const legacyMarker = `.${legacyDirectoryName}`;
 const legacyPattern = new RegExp(String.raw`\.${legacyDirectoryName}\b`, "g");
 
@@ -77,7 +78,7 @@ function classifyFile(relativePath) {
   if (
     relativePath.startsWith(`${promptDir}/studio-`) ||
     relativePath === "docs/codex-agent-catalog.md" ||
-    relativePath === "tools/sync-claude-agents-to-codex.mjs"
+    relativePath === "tools/sync-codex-studio-prompts.mjs"
   ) {
     return "generated role prompts";
   }
@@ -234,7 +235,7 @@ function buildMarkdown({ inventory, coverage }) {
     "## Notes",
     "",
     "- This audit is intentionally deterministic: it inventories literal legacy marker references in ACTIVE_SCOPE so the detach gate can be tracked in version control.",
-    "- Files in `archive/claude/` are outside the active gate and are therefore not included here.",
+    `- Files in \`${allowedArchiveScope[0]}/\` are outside the active gate and are therefore not included here.`,
     "- The missing prompt-source list is derived from the current `studio-*` generated prompt names.",
     ""
   );

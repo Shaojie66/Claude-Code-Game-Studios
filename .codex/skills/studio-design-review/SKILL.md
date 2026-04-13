@@ -11,9 +11,9 @@ Use this before handing one design document to architecture or implementation wo
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/design-review/SKILL.md`
+3. `.codex/skills/studio-design-review/SKILL.md`
 4. The target GDD
-5. `CLAUDE.md`
+5. `docs/studio/technical-preferences.md`
 6. Related GDDs, concept docs, and narrative context if referenced
 7. Prior review logs for the target GDD if present
 

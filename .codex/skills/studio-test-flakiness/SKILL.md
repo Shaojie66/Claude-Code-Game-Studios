@@ -11,7 +11,7 @@ Use this when CI failures start looking intermittent or when quarantined tests n
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/test-flakiness/SKILL.md`
+3. `.codex/skills/studio-test-flakiness/SKILL.md`
 4. Available CI logs or test result artifacts
 5. `tests/regression-suite.md` if present
 6. Relevant test files under `tests/`

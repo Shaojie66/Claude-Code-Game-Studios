@@ -11,7 +11,7 @@ Use this after multiple GDDs exist to review them as a coherent game instead of 
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/review-all-gdds/SKILL.md`
+3. `.codex/skills/studio-review-all-gdds/SKILL.md`
 4. `design/gdd/game-concept.md`
 5. `design/gdd/game-pillars.md` if present
 6. `design/gdd/systems-index.md`

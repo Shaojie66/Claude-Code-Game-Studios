@@ -11,8 +11,8 @@ Use this to choose and configure Godot, Unity, or Unreal for the project.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/setup-engine/SKILL.md`
-4. `.claude/docs/technical-preferences.md`
+3. `.codex/skills/studio-setup-engine/SKILL.md`
+4. `docs/studio/technical-preferences.md`
 5. `design/gdd/game-concept.md` if present
 
 ## Goal
@@ -29,7 +29,7 @@ Move the project from unconfigured or ambiguous engine state to an explicit engi
    - team experience
    - concept needs
 4. Ask only for missing preference signals that materially affect the engine choice.
-5. Update `.claude/docs/technical-preferences.md` with the chosen engine and associated language/tooling details.
+5. Update `docs/studio/technical-preferences.md` with the chosen engine and associated language/tooling details.
 6. Point to engine-specific specialists or next setup steps.
 
 ## Codex Adaptation Rules

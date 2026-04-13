@@ -11,11 +11,11 @@ Use this to validate whether the architecture body actually covers the GDDs, sta
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/architecture-review/SKILL.md`
+3. `.codex/skills/studio-architecture-review/SKILL.md`
 4. In-scope GDDs under `design/gdd/`
 5. ADRs and architecture files under `docs/architecture/`
 6. Engine reference docs under `docs/engine-reference/<engine>/`
-7. `.claude/docs/technical-preferences.md`
+7. `docs/studio/technical-preferences.md`
 
 ## Goal
 

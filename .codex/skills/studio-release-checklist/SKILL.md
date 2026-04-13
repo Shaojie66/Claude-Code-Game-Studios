@@ -11,8 +11,8 @@ Use this to generate a release-readiness checklist before launch or submission.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/release-checklist/SKILL.md`
-4. `CLAUDE.md`
+3. `.codex/skills/studio-release-checklist/SKILL.md`
+4. `docs/studio/technical-preferences.md`
 5. Current milestone and release context under `production/milestones/` and `production/releases/` if present
 6. QA outputs, bug lists, and test artifacts relevant to the pending release
 

@@ -11,7 +11,7 @@ Use this to implement a planned story with the studio workflow constraints.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/dev-story/SKILL.md`
+3. `.codex/skills/studio-dev-story/SKILL.md`
 
 Then load the story and its required context before editing anything.
 
@@ -23,7 +23,7 @@ Read and validate:
 - `docs/architecture/tr-registry.yaml`
 - governing ADR referenced by the story
 - `docs/architecture/control-manifest.md` if present
-- `.claude/docs/technical-preferences.md`
+- `docs/studio/technical-preferences.md`
 
 If the story path is omitted, try `production/session-state/active.md` first.
 
@@ -48,7 +48,7 @@ At the end, provide:
 ## Codex Adaptation Rules
 
 - Do not preserve the upstream “wait for write approval” rule.
-- Replace Claude Task orchestration with Codex-native work and bounded subagents.
+- Replace legacy task orchestration with Codex-native work and bounded subagents.
 - Prefer finishing the implementation loop, including tests and session-state update, before yielding.
 
 ## Completion

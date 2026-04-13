@@ -11,8 +11,8 @@ Use this to scaffold or validate test infrastructure for the chosen engine.
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/test-setup/SKILL.md`
-4. `.claude/docs/technical-preferences.md`
+3. `.codex/skills/studio-test-setup/SKILL.md`
+4. `docs/studio/technical-preferences.md`
 5. Existing `tests/` and `.github/workflows/` state
 
 ## Workflow
@@ -26,7 +26,7 @@ Use this to scaffold or validate test infrastructure for the chosen engine.
 
 - Do not block on Claude-style confirmation prompts for straightforward scaffolding.
 - Prefer additive creation over destructive replacement.
-- Keep the result aligned with the engine choice in `.claude/docs/technical-preferences.md`.
+- Keep the result aligned with the engine choice in `docs/studio/technical-preferences.md`.
 
 ## Handoff
 

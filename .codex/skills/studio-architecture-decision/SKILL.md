@@ -11,7 +11,7 @@ Use this to create or retrofit an ADR in `docs/architecture/` for a significant 
 
 1. `AGENTS.md`
 2. `docs/codex-port.md`
-3. `.claude/skills/architecture-decision/SKILL.md`
+3. `.codex/skills/studio-architecture-decision/SKILL.md`
 4. `docs/registry/architecture.yaml` if present
 5. Existing ADRs under `docs/architecture/`
 6. In-scope GDDs under `design/gdd/`
