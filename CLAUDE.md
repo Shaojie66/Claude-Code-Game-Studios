@@ -1,7 +1,12 @@
-# Claude Code Game Studios -- Game Studio Agent Architecture
+# Legacy Studio Reference
 
-Indie game development managed through 48 coordinated Claude Code subagents.
-Each agent owns a specific domain, enforcing separation of concerns and quality.
+This file is preserved from the upstream template as historical context only.
+In this fork, use [AGENTS.md](AGENTS.md) as the active entrypoint, generated
+prompts under `.codex/prompts/studio-*.md` for studio roles, and
+`.codex/skills/studio-*/SKILL.md` for workflow execution.
+
+The project now runs through Codex and OMX surfaces; do not treat this file as
+the runtime authority.
 
 ## Technology Stack
 
@@ -16,7 +21,7 @@ Each agent owns a specific domain, enforcing separation of concerns and quality.
 
 ## Project Structure
 
-@.claude/docs/directory-structure.md
+@docs/studio/directory-structure.md
 
 ## Engine Version Reference
 
@@ -24,31 +29,24 @@ Each agent owns a specific domain, enforcing separation of concerns and quality.
 
 ## Technical Preferences
 
-@.claude/docs/technical-preferences.md
+@docs/studio/technical-preferences.md
 
 ## Coordination Rules
 
-@.claude/docs/coordination-rules.md
+@docs/studio/coordination-rules.md
 
 ## Collaboration Protocol
 
-**User-driven collaboration, not autonomous execution.**
-Every task follows: **Question -> Options -> Decision -> Draft -> Approval**
+This file preserves upstream collaboration context only. The active
+collaboration contract is defined by `AGENTS.md` and Codex runtime behavior.
 
-- Agents MUST ask "May I write this to [filepath]?" before using Write/Edit tools
-- Agents MUST show drafts or summaries before requesting approval
-- Multi-file changes require explicit approval for the full changeset
-- No commits without user instruction
-
-See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for full protocol and examples.
-
-> **First session?** If the project has no engine configured and no game concept,
-> run `/start` to begin the guided onboarding flow.
+> **First session?** In this fork, use `$game-studio` and
+> `.codex/skills/studio-start/SKILL.md` as the onboarding playbook.
 
 ## Coding Standards
 
-@.claude/docs/coding-standards.md
+@docs/studio/coding-standards.md
 
 ## Context Management
 
-@.claude/docs/context-management.md
+@docs/studio/context-management.md

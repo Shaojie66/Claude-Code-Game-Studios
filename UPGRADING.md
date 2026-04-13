@@ -1,5 +1,9 @@
 # Upgrading Claude Code Game Studios
 
+This document is preserved as historical upgrade guidance for pre-Codex releases.
+Path examples that mention `.claude/` describe legacy versions of the template and
+are not part of the active Codex runtime surface in this fork.
+
 This guide covers upgrading your existing game project repo from one version
 of the template to the next.
 

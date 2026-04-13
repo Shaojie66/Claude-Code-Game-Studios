@@ -329,11 +329,11 @@ Skill: "Writing design/concept.md..."
 
 ---
 
-## 🎛️ Structured Decision UI (AskUserQuestion)
+## Spoken Decision Capture (`ask_user_dictation`)
 
-Use the `AskUserQuestion` tool to present decisions as a **selectable UI** instead
-of plain markdown text. This gives the user a clean interface to pick from options
-(or type "Other" for a custom answer).
+Use `ask_user_dictation` when you need a spoken answer from the user. Present the
+reasoning in normal conversation text, then ask one concise question that the
+user can answer by voice.
 
 ### The Explain → Capture Pattern
 
@@ -344,10 +344,10 @@ pattern:
    detailed pros/cons, theory references, example games, pillar alignment. This is
    where the reasoning lives.
 
-2. **Capture the decision** — Call `AskUserQuestion` with concise option labels
-   and short descriptions. The user picks from the UI or types a custom answer.
+2. **Capture the decision** — Call `ask_user_dictation` with one concise question.
+   If you are offering options, enumerate them in the question itself.
 
-### When to Use AskUserQuestion
+### When to Use ask_user_dictation
 
 ✅ **Use it for:**
 - Every decision point where you'd present 2-4 options
@@ -364,10 +364,10 @@ pattern:
 
 ### Format Guidelines
 
-- **Labels**: 1-5 words (e.g., "Hybrid Discovery", "Full Randomized")
-- **Descriptions**: 1 sentence summarizing the approach and key trade-off
-- **Recommended**: Add "(Recommended)" to your preferred option's label
-- **Previews**: Use `markdown` field for comparing code structures or formulas
+- Keep the spoken question short and concrete
+- If options exist, enumerate them inline in the question
+- State the recommendation in conversation text before asking
+- Use separate questions when independent decisions would be confusing together
 - **Multi-select**: Use `multiSelect: true` when choices aren't mutually exclusive
 
 ### Example — Multi-Question Batch (Clarifying Questions)
@@ -375,7 +375,7 @@ pattern:
 After introducing the topic in conversation, batch constrained questions:
 
 ```
-AskUserQuestion:
+ask_user_dictation:
   questions:
     - question: "Should crafting recipes be discovered or learned?"
       header: "Discovery"
@@ -402,7 +402,7 @@ AskUserQuestion:
 After writing the full pros/cons analysis in conversation text:
 
 ```
-AskUserQuestion:
+ask_user_dictation:
   questions:
     - question: "Which crafting approach fits your vision?"
       header: "Approach"
@@ -420,7 +420,7 @@ AskUserQuestion:
 After presenting the full strategic analysis with pillar alignment:
 
 ```
-AskUserQuestion:
+ask_user_dictation:
   questions:
     - question: "How should we handle crafting scope for Alpha?"
       header: "Scope"
@@ -436,12 +436,12 @@ AskUserQuestion:
 ### Team Skill Orchestration
 
 In team skills, subagents return their analysis as text. The **orchestrator**
-(main session) calls `AskUserQuestion` at each decision point between phases:
+(main session) calls `ask_user_dictation` at each decision point between phases:
 
 ```
 [game-designer returns 3 combat approaches with analysis]
 
-Orchestrator uses AskUserQuestion:
+Orchestrator uses ask_user_dictation:
   question: "Which combat approach should we develop?"
   options: [concise summaries of the 3 approaches]
 
@@ -680,9 +680,9 @@ WHEN implementing:
 
 This principle has been fully embedded across the project:
 
-- **CLAUDE.md** — Collaboration protocol section added
+- **Legacy root config docs** — Collaboration protocol section added in the upstream template
 - **All 48 agent definitions** — Updated to enforce question-asking and approval
 - **All skills** — Updated to require approval before writing
 - **WORKFLOW-GUIDE.md** — Rewritten with collaborative examples
 - **README.md** — Clarifies collaborative (not autonomous) design
-- **AskUserQuestion tool** — Integrated into 16 skills for structured option UI
+- **ask_user_dictation tool** — Integrated into 16 skills for structured option UI
