@@ -1,4 +1,4 @@
-# Game Studio CLI Game Studios -- Complete Workflow Guide
+# Codex Game Studios -- Complete Workflow Guide
 
 > **How to go from zero to a shipped game using the Agent Architecture.**
 >
@@ -70,7 +70,7 @@ Start a new Codex session. You should see output from the
 `session-start.sh` hook:
 
 ```
-=== Game Studio CLI Game Studios -- Session Context ===
+=== Codex Game Studios -- Session Context ===
 Branch: main
 Recent commits:
   abc1234 Initial commit

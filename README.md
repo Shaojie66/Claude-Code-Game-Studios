@@ -366,7 +366,7 @@ Tested on **Windows 10** with Git Bash. All hooks use POSIX-compatible patterns 
 
 ## Supporting This Project
 
-Game Studio CLI Game Studios is free and open source. If it saves you time or helps you ship your game, consider supporting continued development:
+Codex Game Studios is free and open source. If it saves you time or helps you ship your game, consider supporting continued development:
 
 <p>
   <a href="https://www.buymeacoffee.com/donchitos3"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee"></a>

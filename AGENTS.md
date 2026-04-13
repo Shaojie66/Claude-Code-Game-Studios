@@ -24,7 +24,7 @@ This repository is a Codex-native game studio template with migrated workflow as
 
 ## Repository Overlay
 
-This repository is a Codex-native fork of the upstream Game Studio CLI Game Studios template.
+This repository is a Codex-native fork of the upstream game studio template.
 
 - Preserve Codex-native studio content under `.codex/` and `docs/studio/` as the active source of truth.
 - Treat `.codex/prompt-sources/studio/*.md` as the canonical source for studio personas.
